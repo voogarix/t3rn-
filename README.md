@@ -27,6 +27,8 @@ Official t3rn documentation: [https://docs.t3rn.io/executor/become-an-executor/b
 
 ## ⚠️ Important Notes
 
+This is a fork of script by [@rokipdj88](https://github.com/rokipdj88/t3rn/tree/main). All thanks goes to him at first ;)
+
 T3RN Swap and earn BRN [https://bridge.t1rn.io](https://bridge.t1rn.io)
 
 Check Executor [https://bridge.t1rn.io/explorer/orders](https://bridge.t1rn.io/explorer/orders)
@@ -99,7 +101,6 @@ chmod +x t3rn.sh && ./t3rn.sh
 
 Manual Official : [https://docs.t3rn.io/executor/become-an-executor/binary-setup](https://docs.t3rn.io/executor/become-an-executor/binary-setup)
 
-This is a fork of script by [@rokipdj88](https://github.com/rokipdj88/t3rn/tree/main)
 
 ## 🎨 Understanding the Colors
 
