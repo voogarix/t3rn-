@@ -111,6 +111,15 @@ else
 fi
 
 # GENERAL SETTINGS
+
+export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn'
+export RPC_ENDPOINTS_ARBT="https://arb-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://arbitrum-sepolia-rpc.publicnode.com"
+export RPC_ENDPOINTS_BSSP="https://base-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://sepolia.base.org"
+export RPC_ENDPOINTS_BLSS="https://blast-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://sepolia.blast.io"
+export RPC_ENDPOINTS_OPSP="https://opt-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://sepolia.optimism.io"
+export RPC_ENDPOINTS_L1RN='https://brn.rpc.caldera.xyz/,https://brn.calderarpc.com/http'
+  
+
 # Set Node Environment
 export NODE_ENV=testnet
 
