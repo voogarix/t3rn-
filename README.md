@@ -4,11 +4,11 @@ This script always installs the latest version of t3rn node
 
 
 ⚠️ Get free 20€ credit for Hetzner Cloud VPS :
-GO TO : [https://www.hetzner.cloud/](https://hetzner.cloud/?ref=mjjaxNOJxUW1)
+[https://www.hetzner.cloud/](https://hetzner.cloud/?ref=mjjaxNOJxUW1)
 
 
 ⚠️ Get free ALCHEMY API KEY for RPC:
-GO TO : [https://www.alchemy.com/](https://alchemy.com/?r=Dc3MDc2NzI5MjYwN)
+[https://www.alchemy.com/](https://alchemy.com/?r=Dc3MDc2NzI5MjYwN)
       
 To use certain features of this script, you may need an Alchemy API key. Follow these steps to get one:
 1. Visit the Alchemy website.
