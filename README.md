@@ -61,16 +61,31 @@ Bridge:
 ## ✨ AUTO INSTALLATION
 
 ## Cara Menjalankan Script
+Update system :
+```bash
+sudo apt update && sudo apt install -y
+```
+
+Install curl and screen:
+```bash
+sudo apt install curl && sudo apt install screen -y
+```
 
 Run a screen:
 ```bash
 screen -S t3rn
 ```
 
-Paste below command on your terminal and press enter:
+Get latest t3rn.sh file:
 
 ```bash
 wget https://raw.githubusercontent.com/voogarix/t3rn-/refs/heads/main/t3rn.sh && chmod +x t3rn.sh && ./t3rn.sh
+```
+
+Give a permission and run the node:
+
+```bash
+chmod +x t3rn.sh && ./t3rn.sh
 ```
 
 - 🔐 Input PrivateKey
