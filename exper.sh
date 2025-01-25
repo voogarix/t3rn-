@@ -120,18 +120,6 @@ else
     EXECUTOR_PROCESS_ORDERS_API_ENABLED="false"
 fi
 
-# GENERAL SETTINGS
-export EXECUTOR_PROCESS_ORDERS_API_ENABLED=$ENABLE_ORDERS_API
-export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=$ENABLE_PENDING_ORDERS
-export PRIVATE_KEY_LOCAL=$WALLET_PRIVATE_KEY
-export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn'
-export RPC_ENDPOINTS_ARBT="https://arb-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://arbitrum-sepolia-rpc.publicnode.com"
-export RPC_ENDPOINTS_BSSP="https://base-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://sepolia.base.org"
-export RPC_ENDPOINTS_BLSS="https://blast-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://sepolia.blast.io"
-export RPC_ENDPOINTS_OPSP="https://opt-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://sepolia.optimism.io"
-export RPC_ENDPOINTS_L1RN='https://brn.rpc.caldera.xyz/,https://brn.calderarpc.com/http'
-  
-
 # Set Node Environment
 export NODE_ENV=testnet
 
@@ -144,6 +132,16 @@ export EXECUTOR_PROCESS_BIDS_ENABLED=true
 export EXECUTOR_PROCESS_ORDERS_ENABLED=true
 export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
 
+# GENERAL SETTINGS
+export EXECUTOR_PROCESS_ORDERS_API_ENABLED=$ENABLE_ORDERS_API
+export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=$ENABLE_PENDING_ORDERS
+export PRIVATE_KEY_LOCAL=$WALLET_PRIVATE_KEY
+export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn'
+export RPC_ENDPOINTS_ARBT="https://arb-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://arbitrum-sepolia-rpc.publicnode.com"
+export RPC_ENDPOINTS_BSSP="https://base-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://sepolia.base.org"
+export RPC_ENDPOINTS_BLSS="https://blast-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://sepolia.blast.io"
+export RPC_ENDPOINTS_OPSP="https://opt-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://sepolia.optimism.io"
+export RPC_ENDPOINTS_L1RN='https://brn.rpc.caldera.xyz/,https://brn.calderarpc.com/http'
 
 # Display the collected inputs and settings (for verification)
 echo -e "\nCollected inputs and settings:"
