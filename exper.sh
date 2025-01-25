@@ -121,6 +121,8 @@ else
 fi
 
 # GENERAL SETTINGS
+export EXECUTOR_PROCESS_ORDERS_API_ENABLED=$ENABLE_ORDERS_API
+export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=$ENABLE_PENDING_ORDERS
 export PRIVATE_KEY_LOCAL=$WALLET_PRIVATE_KEY
 export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn'
 export RPC_ENDPOINTS_ARBT="https://arb-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://arbitrum-sepolia-rpc.publicnode.com"
