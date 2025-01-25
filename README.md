@@ -27,7 +27,7 @@ Official t3rn documentation: [https://docs.t3rn.io/executor/become-an-executor/b
 
 ## ⚠️ Important Notes
 
-This is a fork of script by [@rokipdj88](https://github.com/rokipdj88/t3rn/tree/main). All thanks goes to him at first ;)
+This is a fork of script by [@rokipdj88](https://github.com/rokipdj88/t3rn/tree/main). All thanks goes to him at first 😉
 
 T3RN Swap and earn BRN [https://bridge.t1rn.io](https://bridge.t1rn.io)
 
