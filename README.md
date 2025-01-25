@@ -70,7 +70,7 @@ screen -S t3rn
 Paste below command on your terminal and press enter:
 
 ```bash
-wget https://raw.githubusercontent.com/voogarix/t3rn/refs/heads/main/t3rn.sh && chmod +x t3rn.sh && ./t3rn.sh
+wget https://raw.githubusercontent.com/voogarix/t3rn-/refs/heads/main/t3rn.sh && chmod +x t3rn.sh && ./t3rn.sh
 ```
 
 - 🔐 Input PrivateKey
