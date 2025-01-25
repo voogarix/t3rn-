@@ -1,5 +1,6 @@
 # 👉 T3RN Executor 1-click installation
-      This script always installs the latest version of t3rn node
+
+This script always installs the latest version of t3rn node
 
 
 ⚠️ Get free 20€ credit for Hetzner Cloud VPS :
