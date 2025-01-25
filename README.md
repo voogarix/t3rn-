@@ -99,6 +99,7 @@ chmod +x t3rn.sh && ./t3rn.sh
 
 Manual Official : [https://docs.t3rn.io/executor/become-an-executor/binary-setup](https://docs.t3rn.io/executor/become-an-executor/binary-setup)
 
+This is a fork of script by [@rokipdj88](https://github.com/rokipdj88/t3rn/tree/main)
 
 ## 🎨 Understanding the Colors
 
