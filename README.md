@@ -63,7 +63,7 @@ Bridge:
 
 ## ✨ AUTO INSTALLATION
 
-## Cara Menjalankan Script
+## How to Run a Script?
 Update system :
 ```bash
 sudo apt update && sudo apt upgrade -y
