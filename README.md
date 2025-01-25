@@ -89,7 +89,9 @@ Give a permission and run the node:
 chmod +x t3rn.sh && ./t3rn.sh
 ```
 
-- 🔐 Input PrivateKey
+- 🔐 Input Wallet's PrivateKey
+
+- 🔐 Input Alchemy API key
 
 - 🟠 Set Gwei, by default gwei is set for 200
 
