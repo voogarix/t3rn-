@@ -111,7 +111,7 @@ else
 fi
 
 # GENERAL SETTINGS
-export PRIVATE_KEY_LOCAL='$WALLET_PRIVATE_KEY'
+export PRIVATE_KEY_LOCAL="$WALLET_PRIVATE_KEY"
 export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn'
 export RPC_ENDPOINTS_ARBT="https://arb-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://arbitrum-sepolia-rpc.publicnode.com"
 export RPC_ENDPOINTS_BSSP="https://base-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://sepolia.base.org"
