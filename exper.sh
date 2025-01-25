@@ -107,17 +107,17 @@ done
 # Ask if they want to enable EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API
 read -p "Do you want to enable EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API? (y/n): " ENABLE_PENDING_ORDERS
 if [[ "$ENABLE_PENDING_ORDERS" =~ ^[Yy]$ ]]; then
-    EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true
+    $ENABLE_PENDING_ORDERS=true
 else
-    EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
+    $ENABLE_PENDING_ORDERS=false
 fi
 
 # Ask if they want to enable EXECUTOR_PROCESS_ORDERS_API_ENABLED
 read -p "Do you want to enable EXECUTOR_PROCESS_ORDERS_API_ENABLED? (y/n): " ENABLE_ORDERS_API
 if [[ "$ENABLE_ORDERS_API" =~ ^[Yy]$ ]]; then
-    EXECUTOR_PROCESS_ORDERS_API_ENABLED=true
+    $ENABLE_ORDERS_API=true
 else
-    EXECUTOR_PROCESS_ORDERS_API_ENABLED=false
+    $ENABLE_ORDERS_API=false
 fi
 
 # Set Node Environment
@@ -131,10 +131,10 @@ export LOG_PRETTY=false
 export EXECUTOR_PROCESS_BIDS_ENABLED=true
 export EXECUTOR_PROCESS_ORDERS_ENABLED=true
 export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
-
-# GENERAL SETTINGS
 export EXECUTOR_PROCESS_ORDERS_API_ENABLED=$ENABLE_ORDERS_API
 export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=$ENABLE_PENDING_ORDERS
+
+# GENERAL SETTINGS
 export PRIVATE_KEY_LOCAL=$WALLET_PRIVATE_KEY
 export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn'
 export RPC_ENDPOINTS_ARBT="https://arb-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,https://arbitrum-sepolia-rpc.publicnode.com"
