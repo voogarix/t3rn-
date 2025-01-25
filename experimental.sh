@@ -138,26 +138,5 @@ echo "EXECUTOR_PROCESS_ORDERS_ENABLED: $EXECUTOR_PROCESS_ORDERS_ENABLED"
 echo "EXECUTOR_PROCESS_CLAIMS_ENABLED: $EXECUTOR_PROCESS_CLAIMS_ENABLED"
 
 # Step 5: Proceed with the installation or other setup steps
-echo -e "\nProceeding with the installation..."
-
-# Example commands (replace with your actual installation commands)
-echo "Setting up Alchemy API key..."
-# Example: export ALCHEMY_API_KEY="$ALCHEMY_API_KEY"
-
-echo "Setting up wallet private key..."
-# Example: export WALLET_PRIVATE_KEY="$WALLET_PRIVATE_KEY"
-
-echo "Setting gas value to $GAS_VALUE..."
-# Example: export GAS_VALUE="$GAS_VALUE"
-
-echo "Configuring EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API: $EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API"
-# Example: export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API="$EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API"
-
-echo "Configuring EXECUTOR_PROCESS_ORDERS_API_ENABLED: $EXECUTOR_PROCESS_ORDERS_API_ENABLED"
-# Example: export EXECUTOR_PROCESS_ORDERS_API_ENABLED="$EXECUTOR_PROCESS_ORDERS_API_ENABLED"
-
-# Add your actual installation commands here
-# For example:
-# ./executor --alchemy-key "$ALCHEMY_API_KEY" --private-key "$WALLET_PRIVATE_KEY" --gas "$GAS_VALUE"
-
-echo "Installation complete!"
+echo -e "\Running the node..."
+./executor
