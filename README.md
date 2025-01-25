@@ -64,7 +64,7 @@ Bridge:
 ## Cara Menjalankan Script
 Update system :
 ```bash
-sudo apt update && sudo apt install -y
+sudo apt update && sudo apt upgrade -y
 ```
 
 Install curl and screen:
