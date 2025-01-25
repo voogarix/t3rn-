@@ -4,16 +4,6 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-echo " _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _ "
-echo "|_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_|"
-echo "|_|                                                            |_|"
-echo "|_| Yb    dP  dP"Yb   dP"Yb   dP""b8    db    88""Yb 88 Yb  dP |_|"
-echo "|_|  Yb  dP  dP   Yb dP   Yb dP   `"   dPYb   88__dP 88  YbdP  |_|"
-echo "|_|   YbdP   Yb   dP Yb   dP Yb  "88  dP__Yb  88"Yb  88  dPYb  |_|"
-echo "|_|    YP     YbodP   YbodP   YboodP dP""""Yb 88  Yb 88 dP  Yb |_|"
-echo "|_| _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _ |_|"
-echo "|_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_||_|"
-
 echo -e "${RED}Join our Telegram channel: https://t.me/kriptoqapik${NC}"
 echo -e "${BLUE}-----------------------------------------------------${NC}"
 echo -e "${RED}Get free 20€ credit for VPS on Hetzner: https://hetzner.cloud/?ref=mjjaxNOJxUW1${NC}"
