@@ -7,7 +7,7 @@ NC='\033[0m'
 echo -e "${RED}Join our Telegram channel: https://t.me/kriptoqapik${NC}"
 echo -e "${BLUE}-----------------------------------------------------${NC}"
 echo -e "${RED}Get free 20€ credit for VPS on Hetzner: https://hetzner.cloud/?ref=mjjaxNOJxUW1${NC}"
-sleep 4
+sleep 3
 
 # Step 0: Clean up previous installations
 echo "Cleaning up previous installations..."
@@ -107,22 +107,6 @@ while true; do
     fi
 done
 
-# Ask if they want to enable EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API
-read -p "Do you want to enable EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API? (y/n): " ENABLE_PENDING_ORDERS
-if [[ "$ENABLE_PENDING_ORDERS" =~ ^[Yy]$ ]]; then
-    EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true
-else
-    EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
-fi
-
-# Ask if they want to enable EXECUTOR_PROCESS_ORDERS_API_ENABLED
-read -p "Do you want to enable EXECUTOR_PROCESS_ORDERS_API_ENABLED? (y/n): " ENABLE_ORDERS_API
-if [[ "$ENABLE_ORDERS_API" =~ ^[Yy]$ ]]; then
-    EXECUTOR_PROCESS_ORDERS_API_ENABLED=true
-else
-    EXECUTOR_PROCESS_ORDERS_API_ENABLED=false
-fi
-
 # Set Node Environment
 export NODE_ENV=testnet
 
@@ -134,8 +118,28 @@ export LOG_PRETTY=false
 export EXECUTOR_PROCESS_BIDS_ENABLED=true
 export EXECUTOR_PROCESS_ORDERS_ENABLED=true
 export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
-export EXECUTOR_PROCESS_ORDERS_API_ENABLED=$EXECUTOR_PROCESS_ORDERS_API_ENABLED
-export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=$EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API
+
+# Configure API-specific settings
+if [[ "$NODE_TYPE" == "api" ]]; then
+    # Automatically enable API-related settings for API nodes
+    export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true
+    export EXECUTOR_PROCESS_ORDERS_API_ENABLED=true
+else
+    # Ask for API-related settings for RPC nodes
+    read -p "Do you want to enable EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API? (y/n): " ENABLE_PENDING_ORDERS
+    if [[ "$ENABLE_PENDING_ORDERS" =~ ^[Yy]$ ]]; then
+        export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true
+    else
+        export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
+    fi
+
+    read -p "Do you want to enable EXECUTOR_PROCESS_ORDERS_API_ENABLED? (y/n): " ENABLE_ORDERS_API
+    if [[ "$ENABLE_ORDERS_API" =~ ^[Yy]$ ]]; then
+        export EXECUTOR_PROCESS_ORDERS_API_ENABLED=true
+    else
+        export EXECUTOR_PROCESS_ORDERS_API_ENABLED=false
+    fi
+fi
 
 # GENERAL SETTINGS
 export PRIVATE_KEY_LOCAL=$WALLET_PRIVATE_KEY
