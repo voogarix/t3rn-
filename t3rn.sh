@@ -183,6 +183,7 @@ export RPC_ENDPOINTS_BSSP
 export RPC_ENDPOINTS_BLSS
 export RPC_ENDPOINTS_OPSP
 export RPC_ENDPOINTS_L1RN
+export EXECUTOR_MAX_L3_GAS_PRICE=$GAS_VALUE
 
 # Display the collected inputs and settings (for verification)
 echo -e "\nCollected inputs and settings:"
