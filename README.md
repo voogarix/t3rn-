@@ -80,7 +80,7 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 ### RPC node = executor will ask for Alchemy API key and will process only orders from RPC requests.
 
-## ⚠️ Additionally script will ask if you want to add custom public RPC nodes. If you say NO thenit will use default public RPCs which already integrated into script
+## ⚠️ Additionally script will ask if you want to add custom public RPC nodes. If you say NO then it will use default public RPCs which already integrated into script
 
 ## ✨ AUTO INSTALLATION
 
