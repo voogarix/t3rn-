@@ -78,7 +78,7 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 ## ⚙️ This script will ask if you wan't to run API or RPC node.
 
-### ℹ️ API node = executor node will process requests from API and doesn't need to have a private RPC points
+### ℹ️ API node = executor node will process requests from API and doesn't need to have a private Alchemy RPC points.
 
 ### ℹ️ RPC node = executor will ask for Alchemy API key and will process only orders from RPC requests.
 
