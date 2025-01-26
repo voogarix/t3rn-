@@ -3,11 +3,11 @@
 ## This script will always install the latest version of t3rn executor node
 
 
-# 👉 Get free 20€ credit for Hetzner Cloud VPS :
+## 👉 Get free 20€ credit for Hetzner Cloud VPS :
 [https://www.hetzner.cloud/](https://hetzner.cloud/?ref=mjjaxNOJxUW1)
 
 
-# 👉 Get free ALCHEMY API KEY for RPC:
+## 👉 Get free ALCHEMY API KEY for RPC:
 [https://www.alchemy.com/](https://alchemy.com/?r=Dc3MDc2NzI5MjYwN)
       
 To use certain features of this script, you may need an Alchemy API key. Follow these steps to get one:
@@ -55,11 +55,17 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 🔴 SEPO to BLAST SEPO : send Sepolia ETH to this address : 0xDeDa8D3CCf044fE2A16217846B6e1f1cfD8e122f  to get ETH on Blast Sepolia
 
 ## Faucet list:
+
 🔴 https://faucet.quicknode.com/arbitrum/sepolia
+
 🔴 https://faucets.chain.link/arbitrum-sepolia
+
 🔴 https://bwarelabs.com/faucets/arbitrum-sepolia
+
 🔴 https://www.alchemy.com/faucets/ethereum-sepolia
+
 🔴 https://docs.metamask.io/developer-tools/faucet/
+
 🔴 https://cloud.google.com/application/web3/faucet/ethereum/sepolia
 
 
@@ -68,9 +74,11 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 
 
-## 💻 This script will ask if you wan't to run API or RPC node.
-# API node = executor node will process requests from API and doesn't need to have a private RPC points
-# RPC node = executor will ask for Alchemy API key and will process only orders from RPC requests.
+# 💻 This script will ask if you wan't to run API or RPC node.
+
+## API node = executor node will process requests from API and doesn't need to have a private RPC points
+
+## RPC node = executor will ask for Alchemy API key and will process only orders from RPC requests.
 
 # ⚠️ Additionally script will ask if you want to add custom public RPC nodes. If you say NO thenit will use default public RPCs which already integrated into script
 
