@@ -82,6 +82,14 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 ## ⚠️ Additionally script will ask if you want to add custom public RPC nodes. If you say NO then it will use default public RPCs which already integrated into script
 
+- ✅ Select a node type
+
+- 🔐 Input required details
+
+- 🟠 Set Gwei, by default gwei is set for 200
+
+- 🏃‍♂️‍➡️🏃‍♂️‍➡️🏃‍♂️‍➡️ Let it run! 🏃‍♂️‍➡️🏃‍♂️‍➡️🏃‍♂️‍➡️
+
 ## ✨ AUTO INSTALLATION
 
 ## How to Run a Script?
@@ -111,13 +119,7 @@ Give a permission and run the node:
 ```bash
 chmod +x t3rn.sh && ./t3rn.sh
 ```
-- ✅ Select a node type
-- 
-- 🔐 Input required details
 
-- 🟠 Set Gwei, by default gwei is set for 200
-
-- 🏃‍♂️‍➡️🏃‍♂️‍➡️🏃‍♂️‍➡️ Let it run! 🏃‍♂️‍➡️🏃‍♂️‍➡️🏃‍♂️‍➡️
 
 
 ## 🎨 Understanding the Colors
