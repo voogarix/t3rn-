@@ -70,7 +70,7 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 
 
-## ⚠️ Official Discord Community 👉 [https://discord.gg/vkvG3Uwd](https://discord.gg/h8qeqJTXR4)
+## 👉 Official  [Discord Community](https://discord.gg/h8qeqJTXR4)
 
 
 
