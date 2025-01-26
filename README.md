@@ -70,6 +70,8 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 🔴 https://cloud.google.com/application/web3/faucet/ethereum/sepolia
 
+ℹ️ You can also buy Sepolia ETH from [TestnetBridge](https://testnetbridge.com/sepolia) if you want to start quickly. 💡Arbitrum and OP networks gives best rates💡
+
 
 
 ## 👉 Official  [Discord Community](https://discord.gg/h8qeqJTXR4)
