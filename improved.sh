@@ -130,9 +130,6 @@ else
     export EXECUTOR_PROCESS_ORDERS_API_ENABLED=false
 fi
 
-# GENERAL SETTINGS
-export PRIVATE_KEY_LOCAL=$WALLET_PRIVATE_KEY
-export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn'
 
 # Default RPC endpoints
 DEFAULT_RPC_ENDPOINTS_ARBT="https://arbitrum-sepolia-rpc.publicnode.com"
@@ -175,6 +172,10 @@ if [[ "$NODE_TYPE" == "rpc" ]]; then
     RPC_ENDPOINTS_BLSS="https://blast-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,$RPC_ENDPOINTS_BLSS"
     RPC_ENDPOINTS_OPSP="https://opt-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,$RPC_ENDPOINTS_OPSP"
 fi
+
+# ASK FOR WALLET PRIVATE KEY
+export PRIVATE_KEY_LOCAL=$WALLET_PRIVATE_KEY
+export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn'
 
 # Export RPC endpoints
 export RPC_ENDPOINTS_ARBT
