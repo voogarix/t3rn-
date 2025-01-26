@@ -70,17 +70,17 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 
 
-# ⚠️ Official Discord Community [https://discord.gg/vkvG3Uwd](https://discord.gg/vkvG3Uwd)
+## ⚠️ Official Discord Community 👉 [https://discord.gg/vkvG3Uwd](https://discord.gg/vkvG3Uwd)
 
 
 
-# 💻 This script will ask if you wan't to run API or RPC node.
+## 💻 This script will ask if you wan't to run API or RPC node.
 
-## API node = executor node will process requests from API and doesn't need to have a private RPC points
+### API node = executor node will process requests from API and doesn't need to have a private RPC points
 
-## RPC node = executor will ask for Alchemy API key and will process only orders from RPC requests.
+### RPC node = executor will ask for Alchemy API key and will process only orders from RPC requests.
 
-# ⚠️ Additionally script will ask if you want to add custom public RPC nodes. If you say NO thenit will use default public RPCs which already integrated into script
+## ⚠️ Additionally script will ask if you want to add custom public RPC nodes. If you say NO thenit will use default public RPCs which already integrated into script
 
 ## ✨ AUTO INSTALLATION
 
