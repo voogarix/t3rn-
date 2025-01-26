@@ -7,7 +7,7 @@ NC='\033[0m'
 echo -e "${RED}Join our Telegram channel: https://t.me/kriptoqapik${NC}"
 echo -e "${BLUE}-----------------------------------------------------${NC}"
 echo -e "${RED}Get free 20€ credit for VPS on Hetzner: https://hetzner.cloud/?ref=mjjaxNOJxUW1${NC}"
-sleep 3
+sleep 5
 
 # Step 0: Clean up previous installations
 echo "Cleaning up previous installations..."
@@ -47,9 +47,9 @@ if [ $? -ne 0 ]; then
 fi
 echo "Download complete."
 
-# Step 3: Extract the archive
+# Step 3: Extract the archive (with visible extraction process)
 echo "Extracting the archive..."
-tar -xzf "executor-linux-$LATEST_TAG.tar.gz"
+tar -xvzf "executor-linux-$LATEST_TAG.tar.gz"
 if [ $? -ne 0 ]; then
     echo "Failed to extract the archive. Please check the file and try again."
     exit 1
@@ -119,26 +119,15 @@ export EXECUTOR_PROCESS_BIDS_ENABLED=true
 export EXECUTOR_PROCESS_ORDERS_ENABLED=true
 export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
 
-# Configure API-specific settings
+# Configure API-specific settings based on node type
 if [[ "$NODE_TYPE" == "api" ]]; then
     # Automatically enable API-related settings for API nodes
     export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true
     export EXECUTOR_PROCESS_ORDERS_API_ENABLED=true
 else
-    # Ask for API-related settings for RPC nodes
-    read -p "Do you want to enable EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API? (y/n): " ENABLE_PENDING_ORDERS
-    if [[ "$ENABLE_PENDING_ORDERS" =~ ^[Yy]$ ]]; then
-        export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true
-    else
-        export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
-    fi
-
-    read -p "Do you want to enable EXECUTOR_PROCESS_ORDERS_API_ENABLED? (y/n): " ENABLE_ORDERS_API
-    if [[ "$ENABLE_ORDERS_API" =~ ^[Yy]$ ]]; then
-        export EXECUTOR_PROCESS_ORDERS_API_ENABLED=true
-    else
-        export EXECUTOR_PROCESS_ORDERS_API_ENABLED=false
-    fi
+    # Automatically disable API-related settings for RPC nodes
+    export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
+    export EXECUTOR_PROCESS_ORDERS_API_ENABLED=false
 fi
 
 # GENERAL SETTINGS
@@ -218,5 +207,7 @@ echo "OPSP: $RPC_ENDPOINTS_OPSP"
 echo "L1RN: $RPC_ENDPOINTS_L1RN"
 
 # Step 5: Proceed with the installation or other setup steps
+echo -e "\nIf this script helped you, dont forget to give a ⭐ on github 😉..."
+sleep 5
 echo -e "\nRunning the node..."
 ./executor
