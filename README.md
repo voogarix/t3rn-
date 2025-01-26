@@ -116,7 +116,7 @@ The tool uses a variety of colors to make the output easy to read:
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/yourusername/t3rn/issues) if you want to contribute.
+Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/voogarix/t3rn-/issues) if you want to contribute.
 
 
 Enjoy using the Automation installation! If you have any questions or run into any issues, please don't hesitate to reach out or open an issue on GitHub.! ✨
