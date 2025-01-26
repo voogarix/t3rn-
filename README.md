@@ -3,11 +3,11 @@
 ## This script will always install the latest version of t3rn executor node
 
 
-## 👉 Get free 20€ credit for Hetzner Cloud VPS :
+## 👉 Get free 20€ credit for Hetzner Cloud VPS 💻 :
 [https://www.hetzner.cloud/](https://hetzner.cloud/?ref=mjjaxNOJxUW1)
 
 
-## 👉 Get free ALCHEMY API KEY for RPC:
+## 👉 Get free ALCHEMY API KEY for RPC 🔗:
 [https://www.alchemy.com/](https://alchemy.com/?r=Dc3MDc2NzI5MjYwN)
       
 To use certain features of this script, you may need an Alchemy API key. Follow these steps to get one:
@@ -21,7 +21,9 @@ To use certain features of this script, you may need an Alchemy API key. Follow 
 
       
   
-Official t3rn documentation: [https://docs.t3rn.io/executor/become-an-executor/binary-setup](https://docs.t3rn.io/executor/become-an-executor/binary-setup)
+👉 Official [Alchemy API Documentation](https://docs.alchemy.com/docs/alchemy-quickstart-guide)
+
+👉 Official [T3RN Binary Setup Doumentation](https://docs.t3rn.io/executor/become-an-executor/binary-setup)
 
 
 ## ⚠️ Important Notes
@@ -74,7 +76,7 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 
 
-## 💻 This script will ask if you wan't to run API or RPC node.
+## ⚙️ This script will ask if you wan't to run API or RPC node.
 
 ### ℹ️ API node = executor node will process requests from API and doesn't need to have a private RPC points
 
