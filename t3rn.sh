@@ -136,7 +136,7 @@ DEFAULT_RPC_ENDPOINTS_ARBT="https://arbitrum-sepolia-rpc.publicnode.com"
 DEFAULT_RPC_ENDPOINTS_BSSP="https://sepolia.base.org"
 DEFAULT_RPC_ENDPOINTS_BLSS="https://sepolia.blast.io"
 DEFAULT_RPC_ENDPOINTS_OPSP="https://sepolia.optimism.io"
-DEFAULT_RPC_ENDPOINTS_L1RN="https://brn.rpc.caldera.xyz/,https://brn.calderarpc.com/http"
+DEFAULT_RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.caldera.xyz/"
 
 # Ask if the user wants to add custom RPC endpoints or use default ones
 read -p "Do you want to add custom public RPC endpoints? (y/n): " CUSTOM_RPC
