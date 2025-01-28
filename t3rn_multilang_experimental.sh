@@ -83,12 +83,12 @@ validate_gas_value() {
 
 # Language selection
 echo -e "${GREEN}Select your language / Dil seçin / Выберите язык / Wählen Sie Ihre Sprache / Pilih bahasa Anda / Choisissez votre langue:${NC}"
-echo "1. English (en)"
-echo "2. Azerbaijani (az)"
-echo "3. Russian (ru)"
-echo "4. German (de)"
-echo "5. Indonesian (id)"
-echo "6. French (fr)"
+echo "English (en)"
+echo "Azerbaijani (az)"
+echo "Russian (ru)"
+echo "German (de)"
+echo "Indonesian (id)"
+echo "French (fr)"
 read -p "Enter language code (e.g., en, az, ru, de, id, fr): " LANG_CODE
 
 # Language-specific strings
@@ -109,7 +109,7 @@ case "$LANG_CODE" in
         MSG_CLEANUP="Əvvəlki quraşdırmaları təmizləyirəm..."
         MSG_DOWNLOAD="Son buraxılışı yükləyirəm..."
         MSG_EXTRACT="Arxiv açılır..."
-        MSG_INVALID_INPUT="Yanlış daxil etmə. 'api' və ya 'rpc' daxil edin. Çıxılır."
+        MSG_INVALID_INPUT="Yanlış giriş. 'api' və ya 'rpc' daxil edin. Çıxılır."
         MSG_PRIVATE_KEY="Cüzdanınızın gizli açarını daxil edin"
         MSG_GAS_VALUE="Qaz dəyərini daxil edin (100 ilə 20000 arasında tam ədəd olmalıdır)"
         MSG_INVALID_GAS="Xəta: Qaz dəyəri 100 ilə 20000 arasında olmalıdır."
@@ -211,10 +211,22 @@ fi
 
 DOWNLOAD_URL="https://github.com/t3rn/executor-release/releases/download/$LATEST_TAG/executor-linux-$LATEST_TAG.tar.gz"
 download_file "$DOWNLOAD_URL" "executor-linux-$LATEST_TAG.tar.gz"
+wget "$DOWNLOAD_URL" -O "executor-linux-$LATEST_TAG.tar.gz"
+if [ $? -ne 0 ]; then
+    echo "Failed to download the latest release. Please check the URL and try again."
+    exit 1
+fi
+echo "Download complete."
 
 # Step 3: Extract the archive
 echo -e "${BLUE}$MSG_EXTRACT${NC}"
 extract_archive "executor-linux-$LATEST_TAG.tar.gz"
+tar -xvzf "executor-linux-$LATEST_TAG.tar.gz"
+if [ $? -ne 0 ]; then
+    echo "Failed to extract the archive. Please check the file and try again."
+    exit 1
+fi
+echo "Extraction complete."
 
 # Step 4: Navigate to the executor binary location
 echo -e "${BLUE}Navigating to the executor binary location...${NC}"
