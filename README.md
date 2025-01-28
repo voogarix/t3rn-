@@ -96,6 +96,18 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 ## ✨ AUTO INSTALLATION
 
+
+## How to Run a Script?
+
+###Now you can test this script without installing or modifying any existing files/folders by using dry-run flag:
+```bash
+./t3rn.sh --dry-run
+```
+###If you want to debug, use --verbose flag:
+```bash
+./t3rn.sh --verbose
+```
+
 ## How to Run a Script?
 Update system :
 ```bash
@@ -104,7 +116,7 @@ sudo apt update && sudo apt upgrade -y
 
 Install curl and screen:
 ```bash
-sudo apt install curl && sudo apt install screen -y
+sudo apt install curl screen -y
 ```
 
 Run a screen:
@@ -123,6 +135,8 @@ Give a permission and run the node:
 ```bash
 chmod +x t3rn.sh && ./t3rn.sh
 ```
+
+###Select your language and continue to setup
 
 
 
