@@ -86,6 +86,8 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 ## ⚠️ Additionally script will ask if you want to add custom public RPC nodes. If you say NO then it will use default public RPCs which already integrated into script
 
+- 🌐 Select your language
+  
 - ✅ Select a node type
 
 - 🔐 Input required details
