@@ -99,16 +99,6 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 ## ✨ AUTO INSTALLATION
 
 
-## 🆕 Test this script without installation
-
-### Now you can test this script without installing or modifying any existing files/folders by using dry-run flag:
-```bash
-./t3rn.sh --dry-run
-```
-### If you want to debug, use --verbose flag:
-```bash
-./t3rn.sh --verbose
-```
 
 ## ⚙️ Run this script to install executor node?
 Update system :
@@ -138,8 +128,16 @@ Give a permission and run the node:
 chmod +x t3rn.sh && ./t3rn.sh
 ```
 
-###Select your language and continue to setup
+## 🆕 Test this script without installation
 
+### Now you can test this script without installing or modifying any existing files/folders by using dry-run flag:
+```bash
+./t3rn.sh --dry-run
+```
+### If you want to debug, use --verbose flag:
+```bash
+./t3rn.sh --verbose
+```
 
 
 ## 🎨 Understanding the Colors
