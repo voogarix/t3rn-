@@ -97,7 +97,7 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 ## ✨ AUTO INSTALLATION
 
 
-## How to Run a Script?
+## 🆕 Test this script without installation
 
 ###Now you can test this script without installing or modifying any existing files/folders by using dry-run flag:
 ```bash
