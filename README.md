@@ -110,7 +110,7 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 ./t3rn.sh --verbose
 ```
 
-## How to Run a Script?
+## ⚙️ Run this script to install executor node?
 Update system :
 ```bash
 sudo apt update && sudo apt upgrade -y
