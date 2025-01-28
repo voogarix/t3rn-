@@ -101,11 +101,11 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 ## 🆕 Test this script without installation
 
-###Now you can test this script without installing or modifying any existing files/folders by using dry-run flag:
+### Now you can test this script without installing or modifying any existing files/folders by using dry-run flag:
 ```bash
 ./t3rn.sh --dry-run
 ```
-###If you want to debug, use --verbose flag:
+### If you want to debug, use --verbose flag:
 ```bash
 ./t3rn.sh --verbose
 ```
