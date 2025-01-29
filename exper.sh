@@ -105,7 +105,7 @@ case "$LANG_CODE" in
         MSG_RPC_ENDPOINTS="Do you want to add custom public RPC endpoints? (y/n)"
         MSG_THANKS="If this script helped you, don't forget to give a ⭐ on GitHub 😉..."
         MSG_NETWORK_SELECTION="Select networks to enable (comma-separated, e.g., ARBT,BSSP,OPSP,BLSS):"
-        MSG_NETWORK_SELECTION_DETAILS="Available networks:\n- arbitrum-sepolia (type ARBT to enable)\n- base-sepolia (type BSSP to enable)\n- optimism-sepolia (type OPSP to enable)\n- blast-sepolia (type BLSS to enable)\nL1RN is always enabled."
+        MSG_NETWORK_SELECTION_DETAILS="Available networks:\n- arbitrum-sepolia (type ARBT to enable)\n- base-sepolia (type BSSP to enable)\n- optimism-sepolia (type OPSP to enable)\n- blast-sepolia (type BLSS to enable)\nL1RN is always enabled.\nType ALL to enable all networks"
         ;;
     az)
         MSG_CLEANUP="Əvvəlki quraşdırmaları təmizləyirəm..."
@@ -119,7 +119,7 @@ case "$LANG_CODE" in
         MSG_RPC_ENDPOINTS="Xüsusi RPC endpointləri əlavə etmək istəyirsiniz? (y/n)"
         MSG_THANKS="Bu skript sizə kömək etdisə, GitHub-da ⭐ verməyi unutmayın 😉..."
         MSG_NETWORK_SELECTION="Aktivləşdirmək üçün şəbəkələri seçin (vergüllə ayrılmış, məsələn, ARBT,BSSP,OPSP,BLSS):"
-        MSG_NETWORK_SELECTION_DETAILS="Mövcud şəbəkələr:\n- arbitrum-sepolia (aktivləşdirmək üçün ARBT yazın)\n- base-sepolia (aktivləşdirmək üçün BSSP yazın)\n- optimism-sepolia (aktivləşdirmək üçün OPSP yazın)\n- blast-sepolia (aktivləşdirmək üçün BLSS yazın)\nL1RN həmişə aktivdir."
+        MSG_NETWORK_SELECTION_DETAILS="Mövcud şəbəkələr:\n- arbitrum-sepolia (aktivləşdirmək üçün ARBT yazın)\n- base-sepolia (aktivləşdirmək üçün BSSP yazın)\n- optimism-sepolia (aktivləşdirmək üçün OPSP yazın)\n- blast-sepolia (aktivləşdirmək üçün BLSS yazın)\nL1RN həmişə aktivdir.\nBütün şəbəkələi aktiv etmək üçün ALL yazın "
         ;;
     ru)
         MSG_CLEANUP="Очистка предыдущих установок..."
@@ -133,7 +133,7 @@ case "$LANG_CODE" in
         MSG_RPC_ENDPOINTS="Хотите добавить пользовательские RPC-точки? (y/n)"
         MSG_THANKS="Если этот скрипт помог вам, не забудьте поставить ⭐ на GitHub 😉..."
         MSG_NETWORK_SELECTION="Выберите сети для включения (через запятую, например, ARBT,BSSP,OPSP,BLSS):"
-        MSG_NETWORK_SELECTION_DETAILS="Доступные сети:\n- arbitrum-sepolia (введите ARBT для включения)\n- base-sepolia (введите BSSP для включения)\n- optimism-sepolia (введите OPSP для включения)\n- blast-sepolia (введите BLSS для включения)\nL1RN всегда включен."
+        MSG_NETWORK_SELECTION_DETAILS="Доступные сети:\n- arbitrum-sepolia (введите ARBT для включения)\n- base-sepolia (введите BSSP для включения)\n- optimism-sepolia (введите OPSP для включения)\n- blast-sepolia (введите BLSS для включения)\nL1RN всегда включен.\nВведите ALL, чтобы включить все сети."
         ;;
     de)
         MSG_CLEANUP="Vorherige Installationen werden bereinigt..."
@@ -147,7 +147,7 @@ case "$LANG_CODE" in
         MSG_RPC_ENDPOINTS="Möchten Sie benutzerdefinierte RPC-Endpoints hinzufügen? (y/n)"
         MSG_THANKS="Wenn Ihnen dieses Skript geholfen hat, vergessen Sie nicht, auf GitHub einen ⭐ zu hinterlassen 😉..."
         MSG_NETWORK_SELECTION="Wählen Sie die zu aktivierenden Netzwerke aus (durch Kommas getrennt, z.B. ARBT,BSSP,OPSP,BLSS):"
-        MSG_NETWORK_SELECTION_DETAILS="Verfügbare Netzwerke:\n- arbitrum-sepolia (geben Sie ARBT ein, um es zu aktivieren)\n- base-sepolia (geben Sie BSSP ein, um es zu aktivieren)\n- optimism-sepolia (geben Sie OPSP ein, um es zu aktivieren)\n- blast-sepolia (geben Sie BLSS ein, um es zu aktivieren)\nL1RN ist immer aktiviert."
+        MSG_NETWORK_SELECTION_DETAILS="Verfügbare Netzwerke:\n- arbitrum-sepolia (geben Sie ARBT ein, um es zu aktivieren)\n- base-sepolia (geben Sie BSSP ein, um es zu aktivieren)\n- optimism-sepolia (geben Sie OPSP ein, um es zu aktivieren)\n- blast-sepolia (geben Sie BLSS ein, um es zu aktivieren)\nL1RN ist immer aktiviert.\nGeben Sie ALL ein, um alle Netzwerke zu aktivieren"
         ;;
     id)
         MSG_CLEANUP="Membersihkan instalasi sebelumnya..."
@@ -161,7 +161,7 @@ case "$LANG_CODE" in
         MSG_RPC_ENDPOINTS="Apakah Anda ingin menambahkan endpoint RPC kustom? (y/n)"
         MSG_THANKS="Jika skrip ini membantu Anda, jangan lupa beri ⭐ di GitHub 😉..."
         MSG_NETWORK_SELECTION="Pilih jaringan yang akan diaktifkan (dipisahkan koma, misalnya, ARBT,BSSP,OPSP,BLSS):"
-        MSG_NETWORK_SELECTION_DETAILS="Jaringan yang tersedia:\n- arbitrum-sepolia (ketik ARBT untuk mengaktifkan)\n- base-sepolia (ketik BSSP untuk mengaktifkan)\n- optimism-sepolia (ketik OPSP untuk mengaktifkan)\n- blast-sepolia (ketik BLSS untuk mengaktifkan)\nL1RN selalu diaktifkan."
+        MSG_NETWORK_SELECTION_DETAILS="Jaringan yang tersedia:\n- arbitrum-sepolia (ketik ARBT untuk mengaktifkan)\n- base-sepolia (ketik BSSP untuk mengaktifkan)\n- optimism-sepolia (ketik OPSP untuk mengaktifkan)\n- blast-sepolia (ketik BLSS untuk mengaktifkan)\nL1RN selalu diaktifkan.\nKetik ALL untuk mengaktifkan semua jaringan"
         ;;
     fr)
         MSG_CLEANUP="Nettoyage des installations précédentes..."
@@ -175,7 +175,7 @@ case "$LANG_CODE" in
         MSG_RPC_ENDPOINTS="Voulez-vous ajouter des points de terminaison RPC personnalisés ? (y/n)"
         MSG_THANKS="Si ce script vous a aidé, n'oubliez pas de mettre un ⭐ sur GitHub 😉..."
         MSG_NETWORK_SELECTION="Sélectionnez les réseaux à activer (séparés par des virgules, par exemple, ARBT,BSSP,OPSP,BLSS):"
-        MSG_NETWORK_SELECTION_DETAILS="Réseaux disponibles:\n- arbitrum-sepolia (tapez ARBT pour activer)\n- base-sepolia (tapez BSSP pour activer)\n- optimism-sepolia (tapez OPSP pour activer)\n- blast-sepolia (tapez BLSS pour activer)\nL1RN est toujours activé."
+        MSG_NETWORK_SELECTION_DETAILS="Réseaux disponibles:\n- arbitrum-sepolia (tapez ARBT pour activer)\n- base-sepolia (tapez BSSP pour activer)\n- optimism-sepolia (tapez OPSP pour activer)\n- blast-sepolia (tapez BLSS pour activer)\nL1RN est toujours activé.\nTapez ALL pour activer tous les réseaux"
         ;;
     *)
         echo -e "${RED}Invalid language code. Exiting.${NC}"
@@ -196,6 +196,11 @@ else
     if [ -d "executor" ]; then
         echo "Deleting existing executor directory..."
         rm -rf executor
+    fi
+	
+	if ls setup.log 1> /dev/null 2>&1; then
+        echo "Deleting previously downloaded tar.gz files..."
+        rm -f setup.log
     fi
 
     if ls executor-linux-*.tar.gz 1> /dev/null 2>&1; then
@@ -265,23 +270,22 @@ while true; do
     fi
 done
 
-# Ask the user which networks to enable
-echo -e "${BLUE}$MSG_NETWORK_SELECTION_DETAILS${NC}"
-NETWORK_SELECTION=$(ask_for_input "$MSG_NETWORK_SELECTION")
-
-# Convert the user's input into a comma-separated list of enabled networks
-ENABLED_NETWORKS="l1rn"  # L1RN is always enabled
-if [[ "$NETWORK_SELECTION" == *"ARBT"* ]]; then
-    ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia"
-fi
-if [[ "$NETWORK_SELECTION" == *"BSSP"* ]]; then
-    ENABLED_NETWORKS="$ENABLED_NETWORKS,base-sepolia"
-fi
-if [[ "$NETWORK_SELECTION" == *"OPSP"* ]]; then
-    ENABLED_NETWORKS="$ENABLED_NETWORKS,optimism-sepolia"
-fi
-if [[ "$NETWORK_SELECTION" == *"BLSS"* ]]; then
-    ENABLED_NETWORKS="$ENABLED_NETWORKS,blast-sepolia"
+if [[ "$NETWORK_SELECTION" == "ALL" ]]; then
+    ENABLED_NETWORKS="l1rn,arbitrum-sepolia,base-sepolia,optimism-sepolia,blast-sepolia"
+else
+    # Enable individual networks based on the user's input
+    if [[ "$NETWORK_SELECTION" == *"ARBT"* ]]; then
+        ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia"
+    fi
+    if [[ "$NETWORK_SELECTION" == *"BSSP"* ]]; then
+        ENABLED_NETWORKS="$ENABLED_NETWORKS,base-sepolia"
+    fi
+    if [[ "$NETWORK_SELECTION" == *"OPSP"* ]]; then
+        ENABLED_NETWORKS="$ENABLED_NETWORKS,optimism-sepolia"
+    fi
+    if [[ "$NETWORK_SELECTION" == *"BLSS"* ]]; then
+        ENABLED_NETWORKS="$ENABLED_NETWORKS,blast-sepolia"
+    fi
 fi
 
 # Set Node Environment
@@ -389,6 +393,12 @@ echo "LOG_PRETTY: $LOG_PRETTY"
 echo "EXECUTOR_PROCESS_BIDS_ENABLED: $EXECUTOR_PROCESS_BIDS_ENABLED"
 echo "EXECUTOR_PROCESS_ORDERS_ENABLED: $EXECUTOR_PROCESS_ORDERS_ENABLED"
 echo "EXECUTOR_PROCESS_CLAIMS_ENABLED: $EXECUTOR_PROCESS_CLAIMS_ENABLED"
+echo "RPC Endpoints:"
+echo "ARBT: $RPC_ENDPOINTS_ARBT"
+echo "BSSP: $RPC_ENDPOINTS_BSSP"
+echo "BLSS: $RPC_ENDPOINTS_BLSS"
+echo "OPSP: $RPC_ENDPOINTS_OPSP"
+echo "L1RN: $RPC_ENDPOINTS_L1RN"
 echo "Enabled Networks: $ENABLED_NETWORKS"
 
 # Step 5: Proceed with the installation or other setup steps
