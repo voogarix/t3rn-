@@ -106,9 +106,9 @@ Update system :
 sudo apt update && sudo apt upgrade -y
 ```
 
-Install curl and screen:
+Install required packages:
 ```bash
-sudo apt install curl screen -y
+sudo apt install curl screen pget pv -y
 ```
 
 Run a screen:
