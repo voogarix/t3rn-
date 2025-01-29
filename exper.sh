@@ -270,10 +270,18 @@ while true; do
     fi
 done
 
+# Ask the user which networks to enable
+echo -e "${BLUE}$MSG_NETWORK_SELECTION_DETAILS${NC}"
+NETWORK_SELECTION=$(ask_for_input "$MSG_NETWORK_SELECTION")
+
+# Convert the user's input into a comma-separated list of enabled networks
+ENABLED_NETWORKS="l1rn"  # L1RN is always enabled
+
+# Check if the user selected ALL
 if [[ "$NETWORK_SELECTION" == "ALL" ]]; then
-    ENABLED_NETWORKS="l1rn,arbitrum-sepolia,base-sepolia,optimism-sepolia,blast-sepolia"
+    ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia,base-sepolia,optimism-sepolia,blast-sepolia"
 else
-    # Enable individual networks based on the user's input
+    # Enable networks based on user selection
     if [[ "$NETWORK_SELECTION" == *"ARBT"* ]]; then
         ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia"
     fi
