@@ -10,6 +10,12 @@ echo -e "${BLUE}-----------------------------------------------------${NC}"
 echo -e "${RED}Get free 20€ credit for VPS on Hetzner: https://hetzner.cloud/?ref=mjjaxNOJxUW1${NC}"
 sleep 5
 
+#Delete old log file
+if ls setup.log 1> /dev/null 2>&1; then
+        echo "Deleting previously downloaded tar.gz files..."
+        rm -f setup.log
+fi
+
 # Log file for debugging
 LOG_FILE="setup.log"
 exec > >(tee -a "$LOG_FILE") 2>&1
@@ -196,11 +202,6 @@ else
     if [ -d "executor" ]; then
         echo "Deleting existing executor directory..."
         rm -rf executor
-    fi
-	
-	if ls setup.log 1> /dev/null 2>&1; then
-        echo "Deleting previously downloaded tar.gz files..."
-        rm -f setup.log
     fi
 
     if ls executor-linux-*.tar.gz 1> /dev/null 2>&1; then
