@@ -263,6 +263,11 @@ fi
 # Ask for wallet private key (visible input)
 WALLET_PRIVATE_KEY=$(ask_for_input "$MSG_PRIVATE_KEY")
 
+# Add Alchemy API key prompt for RPC nodes immediately after wallet key
+if [[ "$NODE_TYPE" == "rpc" ]]; then
+    ALCHEMY_API_KEY=$(ask_for_input "Enter your Alchemy API key")
+fi
+
 # Ask for gas value and validate it
 while true; do
     GAS_VALUE=$(ask_for_input "$MSG_GAS_VALUE")
@@ -270,6 +275,24 @@ while true; do
         break
     fi
 done
+
+# Modified RPC rotation section
+echo -e "\n${BLUE}Current L1RN RPC endpoints:${NC}"
+DEFAULT_RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.caldera.xyz/"
+echo "$DEFAULT_RPC_ENDPOINTS_L1RN"
+read -p "Would you like to rotate RPC endpoints order? (y/n): " ROTATE_RPC
+
+if [[ "$ROTATE_RPC" =~ ^[Yy]$ ]]; then
+    echo -e "${GREEN}Rotating RPC endpoints...${NC}"
+    IFS=',' read -ra endpoints <<< "$DEFAULT_RPC_ENDPOINTS_L1RN"
+    if [ ${#endpoints[@]} -gt 1 ]; then
+        rotated_endpoints=$(printf '%s\n' "${endpoints[@]}" | tac | paste -sd, -)
+        DEFAULT_RPC_ENDPOINTS_L1RN="$rotated_endpoints"
+        echo -e "${GREEN}New RPC order: $DEFAULT_RPC_ENDPOINTS_L1RN${NC}"
+    else
+        echo -e "${RED}Not enough endpoints to rotate. Using default order.${NC}"
+    fi
+fi
 
 # Ask the user which networks to enable
 echo -e "${BLUE}$MSG_NETWORK_SELECTION_DETAILS${NC}"
@@ -350,7 +373,7 @@ else
 fi
 
 # Always use default L1RN RPC endpoints (no custom option)
-RPC_ENDPOINTS_L1RN=$DEFAULT_RPC_ENDPOINTS_L1RN
+DEFAULT_RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.caldera.xyz/"
 
 # Configure RPC endpoints based on node type
 if [[ "$NODE_TYPE" == "rpc" ]]; then
