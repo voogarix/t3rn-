@@ -119,7 +119,7 @@ case "$LANG_CODE" in
         MSG_RPC_ENDPOINTS="Xüsusi RPC endpointləri əlavə etmək istəyirsiniz? (y/n)"
         MSG_THANKS="Bu skript sizə kömək etdisə, GitHub-da ⭐ verməyi unutmayın 😉..."
         MSG_NETWORK_SELECTION="Aktivləşdirmək üçün şəbəkələri seçin (vergüllə ayrılmış, məsələn, ARBT,BSSP,OPSP,BLSS):"
-        MSG_NETWORK_SELECTION_DETAILS="Mövcud şəbəkələr:\n- arbitrum-sepolia (aktivləşdirmək üçün ARBT yazın)\n- base-sepolia (aktivləşdirmək üçün BSSP yazın)\n- optimism-sepolia (aktivləşdirmək üçün OPSP yazın)\n- blast-sepolia (aktivləşdirmək üçün BLSS yazın)\nL1RN həmişə aktivdir.\nBütün şəbəkələi aktiv etmək üçün ALL yazın "
+        MSG_NETWORK_SELECTION_DETAILS="Mövcud şəbəkələr:\n- arbitrum-sepolia (aktivləşdirmək üçün ARBT yazın)\n- base-sepolia (aktivləşdirmək üçün BSSP yazın)\n- optimism-sepolia (aktivləşdirmək üçün OPSP yazın)\n- blast-sepolia (aktivləşdirmək üçün BLSS yazın)\nL1RN həmişə aktivdir.\nBütün şəbəkələri aktiv etmək üçün ALL yazın"
         ;;
     ru)
         MSG_CLEANUP="Очистка предыдущих установок..."
