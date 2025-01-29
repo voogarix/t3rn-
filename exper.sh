@@ -256,7 +256,7 @@ else
 fi
 
 # Ask if the user wants to run an API node or RPC node
-cho -e "\n${GREEN}$MSG_NODE_TYPE${NC}" >&3
+echo -e "\n${GREEN}$MSG_NODE_TYPE${NC}" >&3
 NODE_TYPE=$(ask_for_input "Enter node type (api/rpc)")
 if [[ "$NODE_TYPE" != "api" && "$NODE_TYPE" != "rpc" ]]; then
     echo -e "${RED}$MSG_INVALID_INPUT${NC}"
