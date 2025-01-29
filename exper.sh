@@ -3,15 +3,61 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
+ORANGE='\033[38;5;208m'
 NC='\033[0m' # No Color
+
+# Animated progress bar code
+show_progress() {
+    local spinner=('⣾' '⣽' '⣻' '⢿' '⡿' '⣟' '⣯' '⣷')
+    local spin_idx=0
+    local last_percent=-1
+    
+    while IFS= read -r line; do
+        # Extract percentage from wget output
+        if [[ $line =~ ([0-9]+)% ]]; then
+            local percent=${BASH_REMATCH[1]}
+            
+            # Only update when percentage changes
+            if (( percent != last_percent )); then
+                last_percent=$percent
+                
+                # Calculate progress bar
+                local bar_len=30
+                local filled=$(( (percent * bar_len) / 100 ))
+                local empty=$(( bar_len - filled ))
+                
+                # Build bar and spinner
+                printf "\rDownloading: ["
+                printf "%${filled}s" | tr ' ' '='
+                printf "%${empty}s" | tr ' ' ' '
+                printf "] %3d%% ${spinner[spin_idx]} " "$percent"
+                
+                # Update spinner index
+                (( spin_idx = (spin_idx + 1) % 8 ))
+            fi
+        fi
+    done
+    
+    # Clear line after completion
+    printf "\r\033[K"
+}
 
 # Preserve original stdout for prompts
 exec 3>&1
 
-echo -e "${RED}Join our Telegram channel: https://t.me/kriptoqapik${NC}" >&3
-echo -e "${BLUE}-----------------------------------------------------${NC}" >&3
-echo -e "${RED}Get free 20€ credit for VPS on Hetzner: https://hetzner.cloud/?ref=mjjaxNOJxUW1${NC}" >&3
+echo -e "${GREEN}Join our Telegram channel: https://t.me/kriptoqapik${NC}" >&3
+echo -e "${ORANGE}-----------------------------------------------------${NC}" >&3
+echo -e "${GREEN}Get free 20€ credit for VPS on Hetzner: https://hetzner.cloud/?ref=mjjaxNOJxUW1${NC}" >&3
 sleep 5
+
+
+# Delete old log file
+if ls setup.log 1> /dev/null 2>&1; then
+        echo "Deleting previously downloaded tar.gz files..." >&3
+        rm -f setup.log
+fi
+
+
 
 # Delete old log file
 if ls setup.log 1> /dev/null 2>&1; then
@@ -46,7 +92,7 @@ for arg in "$@"; do
             usage
             ;;
         *)
-            echo -e "${RED}Unknown argument: $arg${NC}" >&3
+            echo -e "${GREEN}Unknown argument: $arg${NC}" >&3
             usage
             ;;
     esac
@@ -59,7 +105,7 @@ fi
 
 # Dry-run mode message
 if $DRY_RUN; then
-    echo -e "${BLUE}Dry-run mode enabled. No changes will be made.${NC}" >&3
+    echo -e "${ORANGE}Dry-run mode enabled. No changes will be made.${NC}" >&3
 fi
 
 # Function to ask for user input with visible prompt
@@ -77,12 +123,12 @@ validate_gas_value() {
     local gas_value="$1"
     
     if [[ ! "$gas_value" =~ ^[0-9]+$ ]]; then
-        echo -e "${RED}Error: Gas value must be an integer.${NC}" >&3
+        echo -e "${GREEN}Error: Gas value must be an integer.${NC}" >&3
         return 1
     fi
 
     if (( gas_value < 100 || gas_value > 20000 )); then
-        echo -e "${RED}Error: Gas value must be between 100 and 20000.${NC}" >&3
+        echo -e "${GREEN}Error: Gas value must be between 100 and 20000.${NC}" >&3
         return 1
     fi
 
@@ -186,13 +232,13 @@ case "$LANG_CODE" in
         MSG_NETWORK_SELECTION_DETAILS="Réseaux disponibles:\n- arbitrum-sepolia (tapez ARBT pour activer)\n- base-sepolia (tapez BSSP pour activer)\n- optimism-sepolia (tapez OPSP pour activer)\n- blast-sepolia (tapez BLSS pour activer)\nL1RN est toujours activé.\nTapez ALL pour activer tous les réseaux"
         ;;
     *)
-        echo -e "${RED}Invalid language code. Exiting.${NC}"
+        echo -e "${GREEN}Invalid language code. Exiting.${NC}"
         exit 1
         ;;
 esac
 
 # Step 0: Clean up previous installations
-echo -e "${BLUE}$MSG_CLEANUP${NC}" >&3
+echo -e "${ORANGE}$MSG_CLEANUP${NC}" >&3
 if $DRY_RUN; then
     echo -e "${GREEN}[Dry-run] Would delete existing t3rn and executor directories.${NC}" >&3
 else
@@ -213,53 +259,54 @@ else
 fi
 
 # Step 1: Create and navigate to t3rn directory
-echo -e "${BLUE}Creating and navigating to t3rn directory...${NC}"
+echo -e "${ORANGE}Creating and navigating to t3rn directory...${NC}"
 if $DRY_RUN; then
     echo -e "${GREEN}[Dry-run] Would create and navigate to t3rn directory.${NC}"
 else
     mkdir -p t3rn
-    cd t3rn || { echo -e "${RED}Failed to create or navigate to t3rn directory. Exiting.${NC}"; exit 1; }
+    cd t3rn || { echo -e "${GREEN}Failed to create or navigate to t3rn directory. Exiting.${NC}"; exit 1; }
 fi
 
 # Step 2: Download the latest release
-echo -e "${BLUE}$MSG_DOWNLOAD${NC}"
+echo -e "${ORANGE}$MSG_DOWNLOAD${NC}" >&3
 LATEST_TAG=$(curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
 if [ -z "$LATEST_TAG" ]; then
-    echo -e "${RED}Failed to fetch the latest release tag. Please check your internet connection and try again.${NC}"
+    echo -e "${GREEN}Failed to fetch the latest release tag. Please check your internet connection and try again.${NC}"
     exit 1
 fi
 
 DOWNLOAD_URL="https://github.com/t3rn/executor-release/releases/download/$LATEST_TAG/executor-linux-$LATEST_TAG.tar.gz"
-wget "$DOWNLOAD_URL" -O "executor-linux-$LATEST_TAG.tar.gz"
-if [ $? -ne 0 ]; then
-    echo "Failed to download the latest release. Please check the URL and try again."
+echo -e "${ORANGE}Downloading...${NC}" >&3
+if wget --show-progress -O "executor-linux-$LATEST_TAG.tar.gz" "$DOWNLOAD_URL" >&3; then
+    echo -e "\r${GREEN}Download complete!${NC}" >&3
+else
+    echo -e "${RED}Download failed! Check the URL or network connection.${NC}" >&3
     exit 1
 fi
-echo "Download complete."
 
 # Step 3: Extract the archive
-echo -e "${BLUE}$MSG_EXTRACT${NC}"
-tar -xvzf "executor-linux-$LATEST_TAG.tar.gz"
-if [ $? -ne 0 ]; then
-    echo "Failed to extract the archive. Please check the file and try again."
+echo -e "${ORANGE}Extracting the archive...${NC}" >&3
+if tar -xvzf "executor-linux-$LATEST_TAG.tar.gz" >&3; then
+    echo -e "${GREEN}Extraction complete!${NC}" >&3
+else
+    echo -e "${RED}Failed to extract the archive. Corrupted download?${NC}" >&3
     exit 1
 fi
-echo "Extraction complete."
 
 # Step 4: Navigate to the executor binary location
-echo -e "${BLUE}Navigating to the executor binary location...${NC}"
+echo -e "${ORANGE}Navigating to the executor binary location...${NC}"
 if $DRY_RUN; then
     echo -e "${GREEN}[Dry-run] Would navigate to executor binary location.${NC}"
 else
     mkdir -p executor/executor/bin
-    cd executor/executor/bin || { echo -e "${RED}Failed to navigate to executor binary location. Exiting.${NC}"; exit 1; }
+    cd executor/executor/bin || { echo -e "${GREEN}Failed to navigate to executor binary location. Exiting.${NC}"; exit 1; }
 fi
 
 # Ask if the user wants to run an API node or RPC node
 echo -e "\n${GREEN}$MSG_NODE_TYPE${NC}" >&3
 NODE_TYPE=$(ask_for_input "Enter node type (api/rpc)")
 if [[ "$NODE_TYPE" != "api" && "$NODE_TYPE" != "rpc" ]]; then
-    echo -e "${RED}$MSG_INVALID_INPUT${NC}"
+    echo -e "${GREEN}$MSG_INVALID_INPUT${NC}"
     exit 1
 fi
 
@@ -280,7 +327,7 @@ while true; do
 done
 
 # Modified RPC rotation section
-echo -e "\n${BLUE}Current L1RN RPC endpoints:${NC}"
+echo -e "\n${ORANGE}Current L1RN RPC endpoints:${NC}"
 DEFAULT_RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.caldera.xyz/"
 echo "$DEFAULT_RPC_ENDPOINTS_L1RN"
 read -p "Would you like to rotate RPC endpoints order? (y/n): " ROTATE_RPC
@@ -293,12 +340,12 @@ if [[ "$ROTATE_RPC" =~ ^[Yy]$ ]]; then
         DEFAULT_RPC_ENDPOINTS_L1RN="$rotated_endpoints"
         echo -e "${GREEN}New RPC order: $DEFAULT_RPC_ENDPOINTS_L1RN${NC}"
     else
-        echo -e "${RED}Not enough endpoints to rotate. Using default order.${NC}"
+        echo -e "${GREEN}Not enough endpoints to rotate. Using default order.${NC}"
     fi
 fi
 
 # Ask the user which networks to enable
-echo -e "${BLUE}$MSG_NETWORK_SELECTION_DETAILS${NC}"
+echo -e "${ORANGE}$MSG_NETWORK_SELECTION_DETAILS${NC}"
 NETWORK_SELECTION=$(ask_for_input "$MSG_NETWORK_SELECTION")
 
 # Convert the user's input into a comma-separated list of enabled networks
@@ -355,7 +402,7 @@ DEFAULT_RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.cald
 
 # Ask if the user wants to add custom RPC endpoints or use default ones
 echo -e "\n${GREEN}$MSG_RPC_ENDPOINTS${NC}" >&3
-CUSTOM_RPC=$(ask_for_input "Add custom RPC endpoints? (y/n)")
+CUSTOM_RPC=$(ask_for_input "Add custom public RPC endpoints? (y/n)")
 if [[ "$CUSTOM_RPC" =~ ^[Yy]$ ]]; then
     echo "Enter custom RPC endpoints (comma-separated for multiple endpoints):"
     RPC_ENDPOINTS_ARBT=$(ask_for_input "Arbitrum Sepolia RPC endpoints (default: $DEFAULT_RPC_ENDPOINTS_ARBT)")
@@ -441,7 +488,7 @@ echo "Enabled Networks: $ENABLED_NETWORKS"
 echo -e "\n$MSG_THANKS"
 sleep 5
 
-echo -e "\n${BLUE}Running the node...${NC}" >&3
+echo -e "\n${ORANGE}Running the node...${NC}" >&3
 if $DRY_RUN; then
     echo -e "${GREEN}[Dry-run] Would execute: ./executor${NC}" >&3
 else
