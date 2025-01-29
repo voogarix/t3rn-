@@ -18,7 +18,21 @@ fi
 
 # Log file for debugging
 LOG_FILE="setup.log"
-exec > >(tee -a "$LOG_FILE") 2>&1
+TMP_LOG=$(mktemp)
+
+# Function to mask sensitive info
+mask_sensitive() {
+    sed -E \
+        -e 's/(private_key": ")[^"]{5}[^"]+([^"]{5}")/\1\2/' \
+        -e 's/(Alchemy API Key: |private key: )[^ ]{5}[^ ]+([^ ]{5})/\1\2/' \
+        -e 's/([-a-zA-Z0-9_]{5})[-a-zA-Z0-9_]+([-a-zA-Z0-9_]{5})/\1*****\2/g'
+}
+
+# Start logging with masking
+exec > >(tee -a "$TMP_LOG" | mask_sensitive > "$LOG_FILE") 2>&1
+
+# Add this cleanup trap
+trap 'rm -f "$TMP_LOG"' EXIT
 
 # Function to display usage instructions
 usage() {
@@ -377,8 +391,6 @@ DEFAULT_RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.cald
 
 # Configure RPC endpoints based on node type
 if [[ "$NODE_TYPE" == "rpc" ]]; then
-    # Ask for Alchemy API key for RPC node
-    ALCHEMY_API_KEY=$(ask_for_input "Enter your Alchemy API key")
     RPC_ENDPOINTS_ARBT="https://arb-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,$RPC_ENDPOINTS_ARBT"
     RPC_ENDPOINTS_BSSP="https://base-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,$RPC_ENDPOINTS_BSSP"
     RPC_ENDPOINTS_BLSS="https://blast-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY,$RPC_ENDPOINTS_BLSS"
@@ -408,14 +420,15 @@ echo -e "\nCollected inputs and settings:"
 echo "Node Type: $NODE_TYPE"
 if [[ "$NODE_TYPE" == "rpc" ]]; then
     # Mask the API key for display
-    MASKED_API_KEY="${ALCHEMY_API_KEY:0:6}******${ALCHEMY_API_KEY: -6}"
+    MASKED_API_KEY="${ALCHEMY_API_KEY:0:5}******${ALCHEMY_API_KEY: -5}"
     echo "Alchemy API Key: $MASKED_API_KEY"
 fi
 
 # Mask the private key for display
-MASKED_PRIVATE_KEY="${WALLET_PRIVATE_KEY:0:6}******${WALLET_PRIVATE_KEY: -6}"
+MASKED_API_KEY="${ALCHEMY_API_KEY:0:5}*****${ALCHEMY_API_KEY: -5}"
+MASKED_PRIVATE_KEY="${WALLET_PRIVATE_KEY:0:5}*****${WALLET_PRIVATE_KEY: -5}"
 echo "Wallet Private Key: $MASKED_PRIVATE_KEY"
-
+echo "Alchemy API Key: $MASKED_API_KEY"
 echo "Gas Value: $GAS_VALUE"
 echo "EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API: $EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API"
 echo "EXECUTOR_PROCESS_ORDERS_API_ENABLED: $EXECUTOR_PROCESS_ORDERS_API_ENABLED"
