@@ -293,6 +293,12 @@ if [[ "$CUSTOM_RPC" =~ ^[Yy]$ ]]; then
     RPC_ENDPOINTS_BSSP=$(ask_for_input "Base Sepolia RPC endpoints (default: $DEFAULT_RPC_ENDPOINTS_BSSP)")
     RPC_ENDPOINTS_BLSS=$(ask_for_input "Blast Sepolia RPC endpoints (default: $DEFAULT_RPC_ENDPOINTS_BLSS)")
     RPC_ENDPOINTS_OPSP=$(ask_for_input "Optimism Sepolia RPC endpoints (default: $DEFAULT_RPC_ENDPOINTS_OPSP)")
+    # Set custom flags for RPC only nodes to improve requests and bidding process
+    export EXECUTOR_PROCESS_BIDS_ENABLED=true
+	export EXECUTOR_ENABLE_BIDDING_PROCESSING=true
+	export EXECUTOR_PROCESS_ORDERS_API_ENABLED=true
+    # Resend failed claims request
+    export EXECUTOR_RESEND_FAILED_CLAIMS=true
 
     # Use default values if the user leaves the input blank
     RPC_ENDPOINTS_ARBT=${RPC_ENDPOINTS_ARBT:-$DEFAULT_RPC_ENDPOINTS_ARBT}
