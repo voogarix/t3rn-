@@ -5,40 +5,29 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo -e "${RED}Join our Telegram channel: https://t.me/kriptoqapik${NC}"
-echo -e "${BLUE}-----------------------------------------------------${NC}"
-echo -e "${RED}Get free 20€ credit for VPS on Hetzner: https://hetzner.cloud/?ref=mjjaxNOJxUW1${NC}"
+# Preserve original stdout for prompts
+exec 3>&1
+
+echo -e "${RED}Join our Telegram channel: https://t.me/kriptoqapik${NC}" >&3
+echo -e "${BLUE}-----------------------------------------------------${NC}" >&3
+echo -e "${RED}Get free 20€ credit for VPS on Hetzner: https://hetzner.cloud/?ref=mjjaxNOJxUW1${NC}" >&3
 sleep 5
 
-#Delete old log file
+# Delete old log file
 if ls setup.log 1> /dev/null 2>&1; then
-        echo "Deleting previously downloaded tar.gz files..."
+        echo "Deleting previous log file..." >&3
         rm -f setup.log
 fi
 
 # Log file for debugging
 LOG_FILE="setup.log"
-TMP_LOG=$(mktemp)
-
-# Function to mask sensitive info
-mask_sensitive() {
-    sed -E \
-        -e 's/(private_key": ")[^"]{5}[^"]+([^"]{5}")/\1\2/' \
-        -e 's/(Alchemy API Key: |private key: )[^ ]{5}[^ ]+([^ ]{5})/\1\2/' \
-        -e 's/([-a-zA-Z0-9_]{5})[-a-zA-Z0-9_]+([-a-zA-Z0-9_]{5})/\1*****\2/g'
-}
-
-# Start logging with masking
-exec > >(tee -a "$TMP_LOG" | mask_sensitive > "$LOG_FILE") 2>&1
-
-# Add this cleanup trap
-trap 'rm -f "$TMP_LOG"' EXIT
+exec > >(tee -a "$LOG_FILE") 2>&1
 
 # Function to display usage instructions
 usage() {
-    echo -e "${GREEN}Usage: $0 [--verbose] [--dry-run]${NC}"
-    echo -e "${GREEN}  --verbose: Enable verbose logging for debugging.${NC}"
-    echo -e "${GREEN}  --dry-run: Simulate script execution without making changes.${NC}"
+    echo -e "${GREEN}Usage: $0 [--verbose] [--dry-run]${NC}" >&3
+    echo -e "${GREEN}  --verbose: Enable verbose logging for debugging.${NC}" >&3
+    echo -e "${GREEN}  --dry-run: Simulate script execution without making changes.${NC}" >&3
     exit 0
 }
 
@@ -57,7 +46,7 @@ for arg in "$@"; do
             usage
             ;;
         *)
-            echo -e "${RED}Unknown argument: $arg${NC}"
+            echo -e "${RED}Unknown argument: $arg${NC}" >&3
             usage
             ;;
     esac
@@ -70,15 +59,16 @@ fi
 
 # Dry-run mode message
 if $DRY_RUN; then
-    echo -e "${BLUE}Dry-run mode enabled. No changes will be made.${NC}"
+    echo -e "${BLUE}Dry-run mode enabled. No changes will be made.${NC}" >&3
 fi
 
-# Function to ask for user input
+# Function to ask for user input with visible prompt
 ask_for_input() {
     local prompt="$1"
     local input
 
-    read -p "$prompt: " input
+    echo -e "${GREEN}$prompt: ${NC}" >&3
+    read -r input <&3
     echo "$input"
 }
 
@@ -86,30 +76,28 @@ ask_for_input() {
 validate_gas_value() {
     local gas_value="$1"
     
-    # Check if the input is an integer
     if [[ ! "$gas_value" =~ ^[0-9]+$ ]]; then
-        echo -e "${RED}Error: Gas value must be an integer.${NC}"
+        echo -e "${RED}Error: Gas value must be an integer.${NC}" >&3
         return 1
     fi
 
-    # Check if the gas value is within the allowed range
     if (( gas_value < 100 || gas_value > 20000 )); then
-        echo -e "${RED}Error: Gas value must be between 100 and 20000.${NC}"
+        echo -e "${RED}Error: Gas value must be between 100 and 20000.${NC}" >&3
         return 1
     fi
 
     return 0
 }
 
-# Language selection
-echo -e "${GREEN}Select your language / Dil seçin / Выберите язык / Wählen Sie Ihre Sprache / Pilih bahasa Anda / Choisissez votre langue:${NC}"
-echo "English (en)"
-echo "Azerbaijani (az)"
-echo "Russian (ru)"
-echo "German (de)"
-echo "Indonesian (id)"
-echo "French (fr)"
-read -p "Enter language code (e.g., en, az, ru, de, id, fr): " LANG_CODE
+# Language selection with visible prompt
+echo -e "\n${GREEN}Select your language / Dil seçin / Выберите язык / Wählen Sie Ihre Sprache / Pilih bahasa Anda / Choisissez votre langue:${NC}" >&3
+echo "English (en)" >&3
+echo "Azerbaijani (az)" >&3
+echo "Russian (ru)" >&3
+echo "German (de)" >&3
+echo "Indonesian (id)" >&3
+echo "French (fr)" >&3
+LANG_CODE=$(ask_for_input "Enter language code (e.g., en, az, ru, de, id, fr)")
 
 # Language-specific strings
 case "$LANG_CODE" in
@@ -204,22 +192,22 @@ case "$LANG_CODE" in
 esac
 
 # Step 0: Clean up previous installations
-echo -e "${BLUE}$MSG_CLEANUP${NC}"
+echo -e "${BLUE}$MSG_CLEANUP${NC}" >&3
 if $DRY_RUN; then
-    echo -e "${GREEN}[Dry-run] Would delete existing t3rn and executor directories.${NC}"
+    echo -e "${GREEN}[Dry-run] Would delete existing t3rn and executor directories.${NC}" >&3
 else
     if [ -d "t3rn" ]; then
-        echo "Deleting existing t3rn directory..."
+        echo "Deleting existing t3rn directory..." >&3
         rm -rf t3rn
     fi
 
     if [ -d "executor" ]; then
-        echo "Deleting existing executor directory..."
+        echo "Deleting existing executor directory..." >&3
         rm -rf executor
     fi
 
     if ls executor-linux-*.tar.gz 1> /dev/null 2>&1; then
-        echo "Deleting previously downloaded tar.gz files..."
+        echo "Deleting previously downloaded tar.gz files..." >&3
         rm -f executor-linux-*.tar.gz
     fi
 fi
@@ -268,7 +256,8 @@ else
 fi
 
 # Ask if the user wants to run an API node or RPC node
-read -p "$MSG_NODE_TYPE: " NODE_TYPE
+cho -e "\n${GREEN}$MSG_NODE_TYPE${NC}" >&3
+NODE_TYPE=$(ask_for_input "Enter node type (api/rpc)")
 if [[ "$NODE_TYPE" != "api" && "$NODE_TYPE" != "rpc" ]]; then
     echo -e "${RED}$MSG_INVALID_INPUT${NC}"
     exit 1
@@ -365,7 +354,8 @@ DEFAULT_RPC_ENDPOINTS_OPSP="https://sepolia.optimism.io"
 DEFAULT_RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.caldera.xyz/"
 
 # Ask if the user wants to add custom RPC endpoints or use default ones
-read -p "$MSG_RPC_ENDPOINTS: " CUSTOM_RPC
+echo -e "\n${GREEN}$MSG_RPC_ENDPOINTS${NC}" >&3
+CUSTOM_RPC=$(ask_for_input "Add custom RPC endpoints? (y/n)")
 if [[ "$CUSTOM_RPC" =~ ^[Yy]$ ]]; then
     echo "Enter custom RPC endpoints (comma-separated for multiple endpoints):"
     RPC_ENDPOINTS_ARBT=$(ask_for_input "Arbitrum Sepolia RPC endpoints (default: $DEFAULT_RPC_ENDPOINTS_ARBT)")
@@ -388,6 +378,7 @@ fi
 
 # Always use default L1RN RPC endpoints (no custom option)
 DEFAULT_RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.caldera.xyz/"
+
 
 # Configure RPC endpoints based on node type
 if [[ "$NODE_TYPE" == "rpc" ]]; then
@@ -416,8 +407,8 @@ export RPC_ENDPOINTS_L1RN
 export EXECUTOR_MAX_L3_GAS_PRICE=$GAS_VALUE
 
 # Display the collected inputs and settings (for verification)
-echo -e "\nCollected inputs and settings:"
-echo "Node Type: $NODE_TYPE"
+echo -e "\n${GREEN}Collected inputs and settings:${NC}" >&3
+echo "Node Type: $NODE_TYPE" >&3
 if [[ "$NODE_TYPE" == "rpc" ]]; then
     # Mask the API key for display
     MASKED_API_KEY="${ALCHEMY_API_KEY:0:5}******${ALCHEMY_API_KEY: -5}"
@@ -450,9 +441,9 @@ echo "Enabled Networks: $ENABLED_NETWORKS"
 echo -e "\n$MSG_THANKS"
 sleep 5
 
+echo -e "\n${BLUE}Running the node...${NC}" >&3
 if $DRY_RUN; then
-    echo -e "${GREEN}[Dry-run] Would run the node.${NC}"
+    echo -e "${GREEN}[Dry-run] Would execute: ./executor${NC}" >&3
 else
-    echo -e "${BLUE}Running the node...${NC}"
     ./executor
 fi
