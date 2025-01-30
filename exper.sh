@@ -169,6 +169,9 @@ done
 WALLET_PRIVATE_KEY=$(ask_for_input "Enter your wallet private key")
 MASKED_PRIVATE_KEY=$(mask_sensitive_data "$WALLET_PRIVATE_KEY")
 
+# Export the private key as PRIVATE_KEY_LOCAL
+export PRIVATE_KEY_LOCAL="$WALLET_PRIVATE_KEY"
+
 # Ask for gas value and validate it
 while true; do
     GAS_VALUE=$(ask_for_input "Enter the gas value (must be an integer between 100 and 20000)")
