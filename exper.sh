@@ -179,6 +179,7 @@ done
 
 # Set Node Environment
 export NODE_ENV=testnet
+export PRIVATE_KEY_LOCAL=$WALLET_PRIVATE_KEY
 
 # Set log settings
 export LOG_LEVEL=debug
@@ -298,6 +299,7 @@ export RPC_ENDPOINTS_OPSP
 export RPC_ENDPOINTS_L1RN
 export EXECUTOR_MAX_L3_GAS_PRICE=$GAS_VALUE
 export ENABLED_NETWORKS
+export 
 
 # Display the collected inputs and settings (for verification)
 echo -e "\nCollected inputs and settings:"
