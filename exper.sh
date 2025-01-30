@@ -11,6 +11,11 @@ echo -e "${RED}Get free 20€ credit for VPS on Hetzner: https://hetzner.cloud/?
 sleep 5
 
 # Log file for debugging
+	if ls setup.log 1> /dev/null 2>&1; then
+        echo "Deleting previous setup.log file..."
+        rm -f setup.log
+    fi
+	
 LOG_FILE="setup.log"
 exec > >(tee -a "$LOG_FILE") 2>&1
 
