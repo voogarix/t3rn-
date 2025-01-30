@@ -169,9 +169,6 @@ done
 WALLET_PRIVATE_KEY=$(ask_for_input "Enter your wallet private key")
 MASKED_PRIVATE_KEY=$(mask_sensitive_data "$WALLET_PRIVATE_KEY")
 
-# Export the private key as PRIVATE_KEY_LOCAL
-export PRIVATE_KEY_LOCAL="$WALLET_PRIVATE_KEY"
-
 # Ask for gas value and validate it
 while true; do
     GAS_VALUE=$(ask_for_input "Enter the gas value (must be an integer between 100 and 20000)")
@@ -236,7 +233,7 @@ fi
 rotate_l1rn_rpcs() {
     local rpcs=(${RPC_ENDPOINTS_L1RN//,/ })
     if [[ ${#rpcs[@]} -gt 1 ]]; then
-        RPC_ENDPOINTS_L1RN="${rpcs[1]},${rpcs[0]}"
+        RPC_ENDPOINTS_L1RN=$(IFS=,; echo "${rpcs[*]:1} ${rpcs[0]}" | tr ' ' ',')
         echo -e "${ORANGE}Rotated L1RN RPCs to: $RPC_ENDPOINTS_L1RN${NC}"
     else
         echo -e "${ORANGE}Not enough RPCs to rotate.${NC}"
@@ -248,9 +245,6 @@ read -p "Do you want to rotate L1RN RPCs? (y/n): " ROTATE_RPC
 if [[ "$ROTATE_RPC" =~ ^[Yy]$ ]]; then
     rotate_l1rn_rpcs
 fi
-
-# Always use default L1RN RPC endpoints (no custom option)
-RPC_ENDPOINTS_L1RN=$DEFAULT_RPC_ENDPOINTS_L1RN
 
 # Ask user which networks to enable
 echo "Available networks:"
