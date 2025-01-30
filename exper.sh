@@ -174,6 +174,14 @@ done
 WALLET_PRIVATE_KEY=$(ask_for_input "Enter your wallet private key")
 MASKED_PRIVATE_KEY=$(mask_sensitive_data "$WALLET_PRIVATE_KEY")
 
+# Ask for Alchemy API
+if [[ "$NODE_TYPE" == "rpc" ]]; then
+    # Mask the API key for display
+    ALCHEMY_API_KEY=$(ask_for_input "Enter your Alchemy API key")
+    MASKED_API_KEY=$(mask_sensitive_data "$ALCHEMY_API_KEY")
+    echo "Alchemy API Key: $MASKED_API_KEY"
+fi
+
 # Ask for gas value and validate it
 while true; do
     GAS_VALUE=$(ask_for_input "Enter the gas value (must be an integer between 100 and 20000)")
@@ -182,9 +190,30 @@ while true; do
     fi
 done
 
+# Function to rotate L1RN RPCs
+RPC_ENDPOINTS_L1RN='https://brn.calderarpc.com/http,https://brn.rpc.caldera.xyz/'
+rotate_l1rn_rpcs() {
+    local rpcs=(${RPC_ENDPOINTS_L1RN//,/ })
+    if [[ ${#rpcs[@]} -gt 1 ]]; then
+        RPC_ENDPOINTS_L1RN=$(IFS=,; echo "${rpcs[*]:1} ${rpcs[0]}" | tr ' ' ',')
+        echo -e "${ORANGE}Rotated L1RN RPCs to: $RPC_ENDPOINTS_L1RN${NC}"
+    else
+        echo -e "${ORANGE}Not enough RPCs to rotate.${NC}"
+    fi
+}
+
+# Ask if the user wants to rotate L1RN RPCs
+read -p "Do you want to rotate L1RN RPCs? (y/n): " ROTATE_RPC
+if [[ "$ROTATE_RPC" =~ ^[Yy]$ ]]; then
+    rotate_l1rn_rpcs
+fi
+
+
+
 # Set Node Environment
 export NODE_ENV=testnet
 export PRIVATE_KEY_LOCAL=$WALLET_PRIVATE_KEY
+export RPC_ENDPOINTS_L1RN=$RPC_ENDPOINTS_L1RN
 
 # Set log settings
 export LOG_LEVEL=debug
@@ -235,22 +264,7 @@ else
     RPC_ENDPOINTS_OPSP=$DEFAULT_RPC_ENDPOINTS_OPSP
 fi
 
-# Function to rotate L1RN RPCs
-rotate_l1rn_rpcs() {
-    local rpcs=(${RPC_ENDPOINTS_L1RN//,/ })
-    if [[ ${#rpcs[@]} -gt 1 ]]; then
-        RPC_ENDPOINTS_L1RN=$(IFS=,; echo "${rpcs[*]:1} ${rpcs[0]}" | tr ' ' ',')
-        echo -e "${ORANGE}Rotated L1RN RPCs to: $RPC_ENDPOINTS_L1RN${NC}"
-    else
-        echo -e "${ORANGE}Not enough RPCs to rotate.${NC}"
-    fi
-}
 
-# Ask if the user wants to rotate L1RN RPCs
-read -p "Do you want to rotate L1RN RPCs? (y/n): " ROTATE_RPC
-if [[ "$ROTATE_RPC" =~ ^[Yy]$ ]]; then
-    rotate_l1rn_rpcs
-fi
 
 # Ask user which networks to enable
 echo "Available networks:"
@@ -309,12 +323,6 @@ export
 # Display the collected inputs and settings (for verification)
 echo -e "\nCollected inputs and settings:"
 echo "Node Type: $NODE_TYPE"
-if [[ "$NODE_TYPE" == "rpc" ]]; then
-    # Mask the API key for display
-    ALCHEMY_API_KEY=$(ask_for_input "Enter your Alchemy API key")
-    MASKED_API_KEY=$(mask_sensitive_data "$ALCHEMY_API_KEY")
-    echo "Alchemy API Key: $MASKED_API_KEY"
-fi
 
 # Mask the private key for display
 echo "Wallet Private Key: $MASKED_PRIVATE_KEY"
