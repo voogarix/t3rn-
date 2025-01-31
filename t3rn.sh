@@ -423,7 +423,7 @@ else
 fi
 
 # Step 1: Create and navigate to t3rn directory
-echo -e "${BLUE}echo -e "${BLUE}$MSG_CREATE_DIR${NC}"${NC}"
+echo -e "${BLUE}$MSG_CREATE_DIR${NC}${NC}"
 if $DRY_RUN; then
     echo -e "${GREEN}$MSG_DRY_RUN_CREATE_DIR${NC}"
 else
