@@ -401,7 +401,7 @@ if $DRY_RUN; then
 	sleep 1
 else
     if [ -d "t3rn" ]; then
-        echo -e "${BLUE}$$MSG_DELETE_T3RN_DIR${NC}"
+        echo -e "${BLUE}$MSG_DELETE_T3RN_DIR${NC}"
         rm -rf t3rn
     fi
 	
