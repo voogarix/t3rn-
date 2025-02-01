@@ -54,7 +54,7 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 🔴 SEPO to OPT SEPO : [https://superbridge.app/op-sepolia](https://superbridge.app/op-sepolia)
 
-🔴 SEPO to BLAST SEPO : send Sepolia ETH to one of these addresses (1st one is recommended) to get ETH on Blast Sepolia: ***0xc644cc19d2A9388b71dd1dEde07cFFC73237Dca8*** or ***0xDeDa8D3CCf044fE2A16217846B6e1f1cfD8e122f***
+🔴 SEPO to BLAST SEPO : send Sepolia ETH to one of these addresses (***1st one is recommended***) to get ETH on Blast Sepolia: ***0xc644cc19d2A9388b71dd1dEde07cFFC73237Dca8*** or ***0xDeDa8D3CCf044fE2A16217846B6e1f1cfD8e122f***
 
 ## Faucet list:
 
