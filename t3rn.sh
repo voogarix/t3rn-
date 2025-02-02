@@ -23,6 +23,25 @@ usage() {
     exit 0
 }
 
+# Function to check and kill running executor process
+kill_running_executor() {
+    local pid
+    pid=$(pgrep -f "./executor")
+
+    if [ -n "$pid" ]; then
+        if $DRY_RUN; then
+            echo -e "${GREEN}[Dry-run] Would kill running executor process (PID: $pid)${NC}"
+        else
+            echo -e "${ORANGE}$MSG_KILLING_EXECUTOR${NC}"
+            kill "$pid"
+            sleep 2
+            echo -e "${GREEN}$MSG_EXECUTOR_KILLED${NC}"
+        fi
+    else
+        echo -e "${BLUE}$MSG_NO_EXECUTOR_RUNNING${NC}"
+    fi
+}
+
 # Parse command-line arguments
 VERBOSE=false
 DRY_RUN=false
@@ -51,7 +70,7 @@ fi
 
 # Dry-run mode message
 if $DRY_RUN; then
-    echo -e "${BLUE}Dry-run mode enabled. No changes will be made.${NC}"
+    echo -e "${ORANGE}Dry-run mode enabled. No changes will be made.${NC}"
 	sleep 1
 fi
 
@@ -81,7 +100,7 @@ validate_gas_value() {
     fi
 
     return 0
-}
+}  # <-- ADD THIS CLOSING BRACE
 
 # Language selection
 while true; do
@@ -124,7 +143,7 @@ while true; do
             MSG_NODE_TYPE_LABEL="Node Type:"
             MSG_ALCHEMY_API_KEY_LABEL="Alchemy API Key:"
             MSG_GAS_VALUE_LABEL="Gas Value:"
-            MSG_RPC_ENDPOINTS_LABEL="RPC Endpoints:"
+            MSG_RPC_ENDPOINTS_LABEL="Enabled Networks and RPC points:"
             MSG_WALLET_PRIVATE_KEY_LABEL="Wallet Private Key:"
             MSG_FAILED_CREATE_DIR="Failed to create or navigate to t3rn directory. Exiting."
             MSG_FAILED_FETCH_TAG="Failed to fetch the latest release tag. Please check your internet connection and try again."
@@ -145,6 +164,21 @@ while true; do
             MSG_BSSP_RPC="Base Sepolia RPC endpoints (default: $DEFAULT_RPC_ENDPOINTS_BSSP)"
             MSG_BLSS_RPC="Blast Sepolia RPC endpoints (default: $DEFAULT_RPC_ENDPOINTS_BLSS)"
             MSG_OPSP_RPC="Optimism Sepolia RPC endpoints (default: $DEFAULT_RPC_ENDPOINTS_OPSP)"
+			MSG_AVAILABLE_NETWORKS="Available networks:"
+			MSG_ARBT_DESC="ARBT = arbitrum-sepolia"
+			MSG_BSSP_DESC="BSSP = base-sepolia"
+			MSG_OPSP_DESC="OPSP = optimism-sepolia"
+			MSG_BLSS_DESC="BLSS = blast-sepolia"
+			MSG_L1RN_ALWAYS_ENABLED="L1RN is always enabled."
+			MSG_ENTER_NETWORKS="Enter the networks you want to enable (comma-separated, e.g., ARBT,BSSP,OPSP,BLSS or press Enter/type 'all' to enable all):"
+			MSG_INVALID_NETWORK="Invalid network: %s. Please enter valid networks."
+			MSG_KILLING_EXECUTOR="A running executor process was found. Killing it..."
+            MSG_EXECUTOR_KILLED="Executor process has been successfully terminated."
+            MSG_NO_EXECUTOR_RUNNING="No running executor process found."
+			MSG_CHECKING_EXECUTOR="=== Checking for running executor process ==="
+            MSG_KILLING_EXECUTOR="Found running executor process. Terminating it to avoid conflicts..."
+            MSG_EXECUTOR_KILLED="Old executor process successfully terminated."
+            MSG_NO_EXECUTOR_RUNNING="No existing executor process found - good to proceed."
             break
             ;;
         az)
@@ -172,7 +206,7 @@ while true; do
             MSG_NODE_TYPE_LABEL="Node Növü:"
             MSG_ALCHEMY_API_KEY_LABEL="Alchemy API Açarı:"
             MSG_GAS_VALUE_LABEL="Qaz Dəyəri:"
-            MSG_RPC_ENDPOINTS_LABEL="RPC Endpointləri:"
+            MSG_RPC_ENDPOINTS_LABEL="Aktiv Şəbəkələr və RPC Nöqtələri:"
             MSG_WALLET_PRIVATE_KEY_LABEL="Cüzdanın Gizli Açarı:"
             MSG_FAILED_CREATE_DIR="t3rn qovluğu yaradıla bilmədi və ya ora keçid edilə bilmədi. Çıxılır."
             MSG_FAILED_FETCH_TAG="Son buraxılış etiketi alına bilmədi. İnternet bağlantınızı yoxlayın və yenidən cəhd edin."
@@ -193,6 +227,21 @@ while true; do
             MSG_BSSP_RPC="Base Sepolia RPC endpointləri (default: $DEFAULT_RPC_ENDPOINTS_BSSP)"
             MSG_BLSS_RPC="Blast Sepolia RPC endpointləri (default: $DEFAULT_RPC_ENDPOINTS_BLSS)"
             MSG_OPSP_RPC="Optimism Sepolia RPC endpointləri (default: $DEFAULT_RPC_ENDPOINTS_OPSP)"
+			MSG_AVAILABLE_NETWORKS="Mövcud şəbəkələr:"
+            MSG_ARBT_DESC="ARBT = arbitrum-sepolia"
+            MSG_BSSP_DESC="BSSP = base-sepolia"
+            MSG_OPSP_DESC="OPSP = optimism-sepolia" 
+            MSG_BLSS_DESC="BLSS = blast-sepolia"
+            MSG_L1RN_ALWAYS_ENABLED="L1RN həmişə aktivdir."
+            MSG_ENTER_NETWORKS="Aktiv etmək istədiyiniz şəbəkələri daxil edin (vergüllə ayrılmış, məsələn, ARBT,BSSP,OPSP,BLSS və ya hamısını aktiv etmək üçün Enter düyməsini basın/'all' yazın):"
+            MSG_INVALID_NETWORK="Yanlış şəbəkə: %s. Zəhmət olmasa etibarlı şəbəkələri daxil edin."
+			MSG_KILLING_EXECUTOR="İşləyən executor prosesi tapıldı. Proses sonlandırılır..."
+            MSG_EXECUTOR_KILLED="Executor prosesi uğurla sonlandırıldı."
+            MSG_NO_EXECUTOR_RUNNING="İşləyən executor prosesi tapılmadı."
+			MSG_CHECKING_EXECUTOR="=== İşlək executor prosesinin yoxlanılması ==="
+            MSG_KILLING_EXECUTOR="İşlək executor prosesi aşkarlandı. Ziddiyyətlərin qarşısını almaq üçün dayandırılır..."
+            MSG_EXECUTOR_KILLED="Köhnə executor prosesi uğurla dayandırıldı."
+            MSG_NO_EXECUTOR_RUNNING="İşlək executor prosesi tapılmadı - davam etmək təhlükəsizdir."
             break
             ;;
         ru)
@@ -220,7 +269,7 @@ while true; do
             MSG_NODE_TYPE_LABEL="Тип узла:"
             MSG_ALCHEMY_API_KEY_LABEL="Ключ Alchemy API:"
             MSG_GAS_VALUE_LABEL="Значение газа:"
-            MSG_RPC_ENDPOINTS_LABEL="RPC-точки:"
+            MSG_RPC_ENDPOINTS_LABEL="Активные сети и RPC-точки:"
             MSG_WALLET_PRIVATE_KEY_LABEL="Приватный ключ кошелька:"
             MSG_FAILED_CREATE_DIR="Не удалось создать или перейти в директорию t3rn. Выход."
             MSG_FAILED_FETCH_TAG="Не удалось получить последний тег релиза. Проверьте подключение к интернету и попробуйте снова."
@@ -241,6 +290,21 @@ while true; do
             MSG_BSSP_RPC="Base Sepolia RPC-точки (по умолчанию: $DEFAULT_RPC_ENDPOINTS_BSSP)"
             MSG_BLSS_RPC="Blast Sepolia RPC-точки (по умолчанию: $DEFAULT_RPC_ENDPOINTS_BLSS)"
             MSG_OPSP_RPC="Optimism Sepolia RPC-точки (по умолчанию: $DEFAULT_RPC_ENDPOINTS_OPSP)"
+			MSG_AVAILABLE_NETWORKS="Доступные сети:"
+            MSG_ARBT_DESC="ARBT = arbitrum-sepolia"
+            MSG_BSSP_DESC="BSSP = base-sepolia"
+            MSG_OPSP_DESC="OPSP = optimism-sepolia"
+            MSG_BLSS_DESC="BLSS = blast-sepolia"
+            MSG_L1RN_ALWAYS_ENABLED="L1RN всегда включен."
+            MSG_ENTER_NETWORKS="Введите сети, которые хотите активировать (через запятую, например: ARBT,BSSP,OPSP,BLSS или нажмите Enter/введите 'all' для всех):"
+            MSG_INVALID_NETWORK="Неверная сеть: %s. Пожалуйста, введите корректные сети."
+			MSG_KILLING_EXECUTOR="Найден запущенный процесс executor. Завершение процесса..."
+            MSG_EXECUTOR_KILLED="Процесс executor успешно завершен."
+            MSG_NO_EXECUTOR_RUNNING="Запущенных процессов executor не найдено."
+			MSG_CHECKING_EXECUTOR="=== Проверка запущенных процессов executor ==="
+            MSG_KILLING_EXECUTOR="Обнаружен запущенный процесс executor. Останавливаем для предотвращения конфликтов..."
+            MSG_EXECUTOR_KILLED="Старый процесс executor успешно остановлен."
+            MSG_NO_EXECUTOR_RUNNING="Запущенных процессов executor не обнаружено - можно продолжать."
             break
             ;;
         de)
@@ -268,7 +332,7 @@ while true; do
             MSG_NODE_TYPE_LABEL="Knotentyp:"
             MSG_ALCHEMY_API_KEY_LABEL="Alchemy API-Schlüssel:"
             MSG_GAS_VALUE_LABEL="Gaswert:"
-            MSG_RPC_ENDPOINTS_LABEL="RPC-Endpunkte:"
+            MSG_RPC_ENDPOINTS_LABEL="Aktivierte Netzwerke und RPC-Punkte:"
             MSG_WALLET_PRIVATE_KEY_LABEL="Wallet-Privatschlüssel:"
             MSG_FAILED_CREATE_DIR="Fehler beim Erstellen oder Navigieren zum t3rn-Verzeichnis. Beenden."
             MSG_FAILED_FETCH_TAG="Fehler beim Abrufen des neuesten Release-Tags. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
@@ -289,6 +353,21 @@ while true; do
             MSG_BSSP_RPC="Base Sepolia RPC-Endpunkte (Standard: $DEFAULT_RPC_ENDPOINTS_BSSP)"
             MSG_BLSS_RPC="Blast Sepolia RPC-Endpunkte (Standard: $DEFAULT_RPC_ENDPOINTS_BLSS)"
             MSG_OPSP_RPC="Optimism Sepolia RPC-Endpunkte (Standard: $DEFAULT_RPC_ENDPOINTS_OPSP)"
+			MSG_AVAILABLE_NETWORKS="Verfügbare Netzwerke:"
+            MSG_ARBT_DESC="ARBT = arbitrum-sepolia"
+            MSG_BSSP_DESC="BSSP = base-sepolia"
+            MSG_OPSP_DESC="OPSP = optimism-sepolia"
+            MSG_BLSS_DESC="BLSS = blast-sepolia"
+            MSG_L1RN_ALWAYS_ENABLED="L1RN ist immer aktiviert."
+            MSG_ENTER_NETWORKS="Geben Sie die zu aktivierenden Netzwerke ein (kommagetrennt, z.B. ARBT,BSSP,OPSP,BLSS oder Enter/'all' für alle):"
+            MSG_INVALID_NETWORK="Ungültiges Netzwerk: %s. Bitte gültige Netzwerke eingeben."
+			MSG_KILLING_EXECUTOR="Ein laufender Executor-Prozess wurde gefunden. Wird beendet..."
+            MSG_EXECUTOR_KILLED="Executor-Prozess wurde erfolgreich beendet."
+            MSG_NO_EXECUTOR_RUNNING="Kein laufender Executor-Prozess gefunden."
+			MSG_CHECKING_EXECUTOR="=== Überprüfung laufender Executor-Prozesse ==="
+            MSG_KILLING_EXECUTOR="Laufender Executor-Prozess gefunden. Wird beendet um Konflikte zu vermeiden..."
+            MSG_EXECUTOR_KILLED="Alter Executor-Prozess erfolgreich beendet."
+            MSG_NO_EXECUTOR_RUNNING="Kein laufender Executor-Prozess gefunden - fortfahren ist sicher."
             break
             ;;
         id)
@@ -316,7 +395,7 @@ while true; do
             MSG_NODE_TYPE_LABEL="Tipe Node:"
             MSG_ALCHEMY_API_KEY_LABEL="Kunci API Alchemy:"
             MSG_GAS_VALUE_LABEL="Nilai Gas:"
-            MSG_RPC_ENDPOINTS_LABEL="Endpoint RPC:"
+            MSG_RPC_ENDPOINTS_LABEL="Jaringan yang Diaktifkan dan Titik RPC:"
             MSG_WALLET_PRIVATE_KEY_LABEL="Kunci Pribadi Dompet:"
             MSG_FAILED_CREATE_DIR="Gagal membuat atau berpindah ke direktori t3rn. Keluar."
             MSG_FAILED_FETCH_TAG="Gagal mengambil tag rilis terbaru. Silakan periksa koneksi internet Anda dan coba lagi."
@@ -337,6 +416,21 @@ while true; do
             MSG_BSSP_RPC="Base Sepolia RPC endpoint (default: $DEFAULT_RPC_ENDPOINTS_BSSP)"
             MSG_BLSS_RPC="Blast Sepolia RPC endpoint (default: $DEFAULT_RPC_ENDPOINTS_BLSS)"
             MSG_OPSP_RPC="Optimism Sepolia RPC endpoint (default: $DEFAULT_RPC_ENDPOINTS_OPSP)"
+			MSG_AVAILABLE_NETWORKS="Jaringan yang tersedia:"
+            MSG_ARBT_DESC="ARBT = arbitrum-sepolia"
+            MSG_BSSP_DESC="BSSP = base-sepolia"
+            MSG_OPSP_DESC="OPSP = optimism-sepolia"
+            MSG_BLSS_DESC="BLSS = blast-sepolia"
+            MSG_L1RN_ALWAYS_ENABLED="L1RN selalu diaktifkan."
+            MSG_ENTER_NETWORKS="Masukkan jaringan yang ingin Anda aktifkan (dipisahkan koma, contoh: ARBT,BSSP,OPSP,BLSS atau tekan Enter/ketik 'all' untuk semua):"
+            MSG_INVALID_NETWORK="Jaringan tidak valid: %s. Silakan masukkan jaringan yang valid."
+			MSG_KILLING_EXECUTOR="Proses executor yang sedang berjalan ditemukan. Menghentikannya..."
+            MSG_EXECUTOR_KILLED="Proses executor telah berhasil dihentikan."
+            MSG_NO_EXECUTOR_RUNNING="Tidak ada proses executor yang sedang berjalan."
+			MSG_CHECKING_EXECUTOR="=== Memeriksa proses executor yang sedang berjalan ==="
+            MSG_KILLING_EXECUTOR="Proses executor yang sedang berjalan ditemukan. Menghentikan untuk menghindari konflik..."
+            MSG_EXECUTOR_KILLED="Proses executor lama berhasil dihentikan."
+            MSG_NO_EXECUTOR_RUNNING="Tidak ada proses executor yang berjalan - aman untuk melanjutkan."
             break
             ;;
         fr)
@@ -364,7 +458,7 @@ while true; do
             MSG_NODE_TYPE_LABEL="Type de nœud :"
             MSG_ALCHEMY_API_KEY_LABEL="Clé API Alchemy :"
             MSG_GAS_VALUE_LABEL="Valeur du gaz :"
-            MSG_RPC_ENDPOINTS_LABEL="Points de terminaison RPC :"
+            MSG_RPC_ENDPOINTS_LABEL="Réseaux activés et points RPC:"
             MSG_WALLET_PRIVATE_KEY_LABEL="Clé privée du portefeuille :"
             MSG_FAILED_CREATE_DIR="Échec de la création ou de la navigation vers le répertoire t3rn. Sortie."
             MSG_FAILED_FETCH_TAG="Échec de la récupération de la dernière balise de version. Veuillez vérifier votre connexion Internet et réessayer."
@@ -385,6 +479,18 @@ while true; do
             MSG_BSSP_RPC="Points de terminaison RPC Base Sepolia (par défaut : $DEFAULT_RPC_ENDPOINTS_BSSP)"
             MSG_BLSS_RPC="Points de terminaison RPC Blast Sepolia (par défaut : $DEFAULT_RPC_ENDPOINTS_BLSS)"
             MSG_OPSP_RPC="Points de terminaison RPC Optimism Sepolia (par défaut : $DEFAULT_RPC_ENDPOINTS_OPSP)"
+			MSG_AVAILABLE_NETWORKS="Réseaux disponibles :"
+            MSG_ARBT_DESC="ARBT = arbitrum-sepolia"
+            MSG_BSSP_DESC="BSSP = base-sepolia"
+            MSG_OPSP_DESC="OPSP = optimism-sepolia"
+            MSG_BLSS_DESC="BLSS = blast-sepolia"
+            MSG_L1RN_ALWAYS_ENABLED="L1RN est toujours activé."
+            MSG_ENTER_NETWORKS="Entrez les réseaux à activer (séparés par des virgules, ex: ARBT,BSSP,OPSP,BLSS ou Entrée/'all' pour tous) :"
+            MSG_INVALID_NETWORK="Réseau invalide : %s. Veuillez entrer des réseaux valides."
+			MSG_CHECKING_EXECUTOR="=== Vérification des processus executor en cours ==="
+            MSG_KILLING_EXECUTOR="Processus executor en cours détecté. Arrêt pour éviter les conflits..."
+            MSG_EXECUTOR_KILLED="Ancien processus executor arrêté avec succès."
+            MSG_NO_EXECUTOR_RUNNING="Aucun processus executor en cours - prêt à continuer."
             break
             ;;
         *)
@@ -395,27 +501,27 @@ done
 
 
 # Step 0: Clean up previous installations
-echo -e "${BLUE}$MSG_CLEANUP${NC}"
+echo -e "${GREEN}$MSG_CLEANUP${NC}"
 if $DRY_RUN; then
-    echo -e "${GREEN}$MSG_DRY_RUN_DELETE${NC}"
+    echo -e "${ORANGE}$MSG_DRY_RUN_DELETE${NC}"
 	sleep 1
 else
     if [ -d "t3rn" ]; then
-        echo -e "${BLUE}$MSG_DELETE_T3RN_DIR${NC}"
+        echo -e "${ORANGE}$MSG_DELETE_T3RN_DIR${NC}"
         rm -rf t3rn
     fi
 	
 	sleep 1
 
     if [ -d "executor" ]; then
-        echo -e "${BLUE}$MSG_DELETE_EXECUTOR_DIR${NC}"
+        echo -e "${ORANGE}$MSG_DELETE_EXECUTOR_DIR${NC}"
         rm -rf executor
     fi
 	
 	sleep 1
 	
     if ls executor-linux-*.tar.gz 1> /dev/null 2>&1; then
-        echo -e "${BLUE}$MSG_DELETE_TAR_GZ${NC}"
+        echo -e "${ORANGE}$MSG_DELETE_TAR_GZ${NC}"
         rm -f executor-linux-*.tar.gz
     fi
 	
@@ -423,7 +529,7 @@ else
 fi
 
 # Step 1: Create and navigate to t3rn directory
-echo -e "${BLUE}$MSG_CREATE_DIR${NC}"
+echo -e "${ORANGE}$MSG_CREATE_DIR${NC}"
 if $DRY_RUN; then
     echo -e "${GREEN}$MSG_DRY_RUN_CREATE_DIR${NC}"
 else
@@ -432,7 +538,7 @@ else
 fi
 
 # Step 2: Download the latest release
-echo -e "${BLUE}$MSG_DOWNLOAD${NC}"
+echo -e "${ORANGE}$MSG_DOWNLOAD${NC}"
 LATEST_TAG=$(curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
 if [ -z "$LATEST_TAG" ]; then
     echo -e "${RED}$MSG_FAILED_FETCH_TAG${NC}"
@@ -441,7 +547,7 @@ if [ -z "$LATEST_TAG" ]; then
 fi
 
 DOWNLOAD_URL="https://github.com/t3rn/executor-release/releases/download/$LATEST_TAG/executor-linux-$LATEST_TAG.tar.gz"
-download_file "$DOWNLOAD_URL" "executor-linux-$LATEST_TAG.tar.gz"
+#download_file "$DOWNLOAD_URL" "executor-linux-$LATEST_TAG.tar.gz"
 wget --progress=bar:force:noscroll "$DOWNLOAD_URL" -O "executor-linux-$LATEST_TAG.tar.gz"
 if [ $? -ne 0 ]; then
     echo "${RED}$MSG_FAILED_DOWNLOAD${NC}"
@@ -452,7 +558,7 @@ echo -e "${GREEN}$MSG_DOWNLOAD_COMPLETE${NC}"
 sleep 1
 
 # Step 3: Extract the archive
-echo -e "${BLUE}$MSG_EXTRACT${NC}"
+echo -e "${ORANGE}$MSG_EXTRACT${NC}"
 # extract_archive "executor-linux-$LATEST_TAG.tar.gz"
 tar -xvzf "executor-linux-$LATEST_TAG.tar.gz"
 if [ $? -ne 0 ]; then
@@ -460,11 +566,12 @@ if [ $? -ne 0 ]; then
 	sleep 2
     exit 1
 fi
+
 echo -e "${GREEN}$MSG_EXTRACTION_COMPLETE${NC}"
 sleep 1
 
 # Step 4: Navigate to the executor binary location
-echo -e "${BLUE}$MSG_NAVIGATE_BINARY${NC}"
+echo -e "${ORANGE}$MSG_NAVIGATE_BINARY${NC}"
 if $DRY_RUN; then
     echo -e "${GREEN}$MSG_DRY_RUN_DELETE${NC}"
 	sleep 1
@@ -629,7 +736,51 @@ fi
 
 # ASK FOR WALLET PRIVATE KEY
 export PRIVATE_KEY_LOCAL=$WALLET_PRIVATE_KEY
-export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn'
+
+# Ask user which network should be enabled
+echo -e "${GREEN}$MSG_AVAILABLE_NETWORKS${NC}"
+echo -e "${ORANGE}$MSG_ARBT_DESC${NC}"
+echo -e "${ORANGE}$MSG_BSSP_DESC${NC}"
+echo -e "${ORANGE}$MSG_OPSP_DESC${NC}"
+echo -e "${ORANGE}$MSG_BLSS_DESC${NC}"
+echo -e "${RED}$MSG_L1RN_ALWAYS_ENABLED${NC}"
+
+ENABLED_NETWORKS="l1rn"
+while true; do
+    read -p "$(echo -e "${GREEN}$MSG_ENTER_NETWORKS${NC} ")" USER_NETWORKS
+    if [[ -z "$USER_NETWORKS" || "$USER_NETWORKS" =~ ^[Aa][Ll][Ll]$ ]]; then
+        ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia,base-sepolia,optimism-sepolia,blast-sepolia"
+        break
+    else
+        IFS=',' read -r -a networks <<< "$USER_NETWORKS"
+        valid=true
+        for network in "${networks[@]}"; do
+            case "$network" in
+                ARBT)
+                    ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia"
+                    ;;
+                BSSP)
+                    ENABLED_NETWORKS="$ENABLED_NETWORKS,base-sepolia"
+                    ;;
+                OPSP)
+                    ENABLED_NETWORKS="$ENABLED_NETWORKS,optimism-sepolia"
+                    ;;
+                BLSS)
+                    ENABLED_NETWORKS="$ENABLED_NETWORKS,blast-sepolia"
+                    ;;
+                *)
+                    echo -e "${RED}$(printf "$MSG_INVALID_NETWORK" "$network")${NC}"
+                    valid=false
+                    break
+                    ;;
+            esac  # Close the case block
+        done  # Close the for loop
+        if $valid; then
+            break
+        fi  # Close the if block
+    fi  # Close the outer if block
+done  # Close the while loop
+export ENABLED_NETWORKS
 
 # Export RPC endpoints
 export RPC_ENDPOINTS_ARBT
@@ -651,21 +802,33 @@ fi
 # Mask the private key for display
 MASKED_PRIVATE_KEY="${WALLET_PRIVATE_KEY:0:6}******${WALLET_PRIVATE_KEY: -6}"
 echo -e "${ORANGE}$MSG_WALLET_PRIVATE_KEY_LABEL${NC} ${BLUE}$MASKED_PRIVATE_KEY${NC}"
-echo -e "${ORANGE}$MSG_GAS_VALUE_LABEL $GAS_VALUE${NC}"
-echo -e "${ORANGE}EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API: $EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API${NC}"
-echo -e "${ORANGE}EXECUTOR_PROCESS_ORDERS_API_ENABLED: $EXECUTOR_PROCESS_ORDERS_API_ENABLED${NC}"
-echo -e "${ORANGE}NODE_ENV: $NODE_ENV${NC}"
-echo -e "${ORANGE}LOG_LEVEL: $LOG_LEVEL${NC}"
-echo -e "${ORANGE}LOG_PRETTY: $LOG_PRETTY${NC}"
-echo -e "${ORANGE}EXECUTOR_PROCESS_BIDS_ENABLED: $EXECUTOR_PROCESS_BIDS_ENABLED${NC}"
-echo -e "${ORANGE}EXECUTOR_PROCESS_ORDERS_ENABLED: $EXECUTOR_PROCESS_ORDERS_ENABLED${NC}"
-echo -e "${ORANGE}EXECUTOR_PROCESS_CLAIMS_ENABLED: $EXECUTOR_PROCESS_CLAIMS_ENABLED${NC}"
-echo -e "${ORANGE}$MSG_RPC_ENDPOINTS_LABEL${NC}"
-echo -e "${ORANGE}ARBT: $RPC_ENDPOINTS_ARBT${NC}"
-echo -e "${ORANGE}BSSP: $RPC_ENDPOINTS_BSSP${NC}"
-echo -e "${ORANGE}BLSS: $RPC_ENDPOINTS_BLSS${NC}"
-echo -e "${ORANGE}OPSP: $RPC_ENDPOINTS_OPSP${NC}"
-echo -e "${ORANGE}L1RN: $RPC_ENDPOINTS_L1RN${NC}"
+echo -e "${ORANGE}$MSG_GAS_VALUE_LABEL${NC} ${BLUE}$GAS_VALUE${NC}"
+echo -e "${ORANGE}EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API:${NC} ${BLUE}$EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API${NC}"
+echo -e "${ORANGE}EXECUTOR_PROCESS_ORDERS_API_ENABLED:${NC} ${BLUE}$EXECUTOR_PROCESS_ORDERS_API_ENABLED${NC}"
+echo -e "${ORANGE}NODE_ENV:${NC} ${BLUE}$NODE_ENV${NC}"
+echo -e "${ORANGE}LOG_LEVEL:${NC} ${BLUE}$LOG_LEVEL${NC}"
+echo -e "${ORANGE}LOG_PRETTY:${NC} ${BLUE}$LOG_PRETTY${NC}"
+echo -e "${ORANGE}EXECUTOR_PROCESS_BIDS_ENABLED:${NC} ${BLUE}$EXECUTOR_PROCESS_BIDS_ENABLED${NC}"
+echo -e "${ORANGE}EXECUTOR_PROCESS_ORDERS_ENABLED:${NC} ${BLUE}$EXECUTOR_PROCESS_ORDERS_ENABLED${NC}"
+echo -e "${ORANGE}EXECUTOR_PROCESS_CLAIMS_ENABLED:${NC} ${BLUE}$EXECUTOR_PROCESS_CLAIMS_ENABLED${NC}"
+echo -e "${GREEN}$MSG_RPC_ENDPOINTS_LABEL${NC}"
+
+# Check which networks are enabled and display their RPC endpoints
+if [[ "$ENABLED_NETWORKS" == *"arbitrum-sepolia"* ]]; then
+    echo -e "${ORANGE}ARBT:${NC} ${BLUE}$RPC_ENDPOINTS_ARBT${NC}"
+fi
+if [[ "$ENABLED_NETWORKS" == *"base-sepolia"* ]]; then
+    echo -e "${ORANGE}BSSP:${NC} ${BLUE}$RPC_ENDPOINTS_BSSP${NC}"
+fi
+if [[ "$ENABLED_NETWORKS" == *"blast-sepolia"* ]]; then
+    echo -e "${ORANGE}BLSS:${NC} ${BLUE}$RPC_ENDPOINTS_BLSS${NC}"
+fi
+if [[ "$ENABLED_NETWORKS" == *"optimism-sepolia"* ]]; then
+    echo -e "${ORANGE}OPSP:${NC} ${BLUE}$RPC_ENDPOINTS_OPSP${NC}"
+fi
+if [[ "$ENABLED_NETWORKS" == *"l1rn"* ]]; then
+    echo -e "${ORANGE}L1RN:${NC} ${BLUE}$RPC_ENDPOINTS_L1RN${NC}"
+fi
 
 # Step 5: Proceed with the installation or other setup steps
 echo -e "${GREEN}$MSG_THANKS${NC}"
@@ -674,6 +837,10 @@ sleep 3
 if $DRY_RUN; then
     echo -e "${GREEN}$MSG_DRY_RUN_RUN_NODE${NC}"
 else
+    echo -e "\n${ORANGE}$MSG_CHECKING_EXECUTOR${NC}"
+	kill_running_executor
+	sleep 1
+
     echo -e "${BLUE}$MSG_RUNNING_NODE${NC}"
     ./executor
 fi
