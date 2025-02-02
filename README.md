@@ -108,7 +108,7 @@ sudo apt update && sudo apt upgrade -y
 
 Install required packages:
 ```bash
-sudo apt install curl screen pv -y
+sudo apt install curl screen -y
 ```
 
 If you were using old version of this script, first delete it:
@@ -119,11 +119,6 @@ find ~/ -type f -name '*t3rn*' -exec rm -f {} \;
 Kill old screens if you want:
 ```bash
 killall screen
-```
-
-Kill running executor process (if you are updating or trying to re-run your node):
-```bash
-pkill -9 -f './executor'
 ```
 
 Run a screen so node could work on the background if you logout or close the terminal:
