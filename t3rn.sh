@@ -6,9 +6,20 @@ BLUE='\033[0;34m'
 ORANGE='\033[38;5;214m'
 NC='\033[0m' # No Color
 
-echo -e "${GREEN}Join our Telegram channel: https://t.me/kriptoqapik${NC}"
+echo ">>============================================================<<";
+echo "||V)    vv                                         ## X)    xx||";
+echo "||V)    vv                                             X)  xx ||";
+echo "||V)    vv  o)OOO   o)OOO   g)GGG  a)AAAA   r)RRR  i)   X)xx  ||";
+echo "|| V)  vv  o)   OO o)   OO g)   GG  a)AAA  r)   RR i)   X)xx  ||";
+echo "||  V)vv   o)   OO o)   OO g)   GG a)   A  r)      i)  X)  xx ||";
+echo "||   V)     o)OOO   o)OOO   g)GGGG  a)AAAA r)      i) X)    xx||";
+echo "||                              GG                            ||";
+echo "||                         g)GGGG                             ||";
+echo ">>============================================================<<";
+
 echo -e "${ORANGE}-----------------------------------------------------${NC}"
-echo -e "${GREEN}Get free 20€ credit for VPS on Hetzner: https://hetzner.cloud/?ref=mjjaxNOJxUW1${NC}"
+echo -e "${GREEN}Get free 20€ credit for VPS on Hetzner:${NC} ${ORANGE}https://hetzner.cloud/?ref=mjjaxNOJxUW1${NC}"
+echo -e "${GREEN}Get free Alchemy API:${NC} ${ORANGE}https://alchemy.com/?r=Dc3MDc2NzI5MjYwN${NC}"
 sleep 3
 
 # Log file for debugging
