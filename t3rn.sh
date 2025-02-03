@@ -714,7 +714,7 @@ done
 # Validate user input
 while true; do
     echo -e "${ORANGE}$MSG_SELECT_L1RN: ${NC}" 
-	read SELECTED_L1RN
+    read SELECTED_L1RN
     IFS=',' read -ra SELECTED_INDICES <<< "$SELECTED_L1RN"
     VALID_INDICES=()
     for index in "${SELECTED_INDICES[@]}"; do
@@ -737,12 +737,18 @@ while true; do
     fi
 done
 
-# Build the final RPC_ENDPOINTS_L1RN string
+# Build the final RPC_ENDPOINTS_L1RN string and ensure it gets appended properly
 SELECTED_URLS=()
 for i in "${VALID_INDICES[@]}"; do
     SELECTED_URLS+=("${L1RN_RPC_OPTIONS[$i]}")
 done
-RPC_ENDPOINTS_L1RN=$(IFS=,; echo "${SELECTED_URLS[*]}")
+
+# Ensure default or user selection gets assigned
+if [ ${#SELECTED_URLS[@]} -eq 0 ]; then
+    RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.caldera.xyz/"
+else
+    RPC_ENDPOINTS_L1RN=$(IFS=,; echo "${SELECTED_URLS[*]}")
+fi
 
 # Configure RPC endpoints based on node type
 if [[ "$NODE_TYPE" == "rpc" ]]; then
