@@ -190,6 +190,7 @@ while true; do
             MSG_KILLING_EXECUTOR="Found running executor process. Terminating it to avoid conflicts..."
             MSG_EXECUTOR_KILLED="Old executor process successfully terminated."
             MSG_NO_EXECUTOR_RUNNING="No existing executor process found - good to proceed."
+			MSG_WARNING="⚠️ WARNING: WHEN SHARING SCREENSHOTS OF THIS SCRIPT DUE TO AN ERROR, MAKE SURE YOUR PRIVATE KEYS AND ALCHEMY API KEY ARE NOT VISIBLE! OTHERWISE, YOU COULD LOSE ALL ASSETS IN YOUR WALLET OR EXPOSE YOUR API ACCESS! ⚠️"
             break
             ;;
         az)
@@ -253,6 +254,7 @@ while true; do
             MSG_KILLING_EXECUTOR="İşlək executor prosesi aşkarlandı. Ziddiyyətlərin qarşısını almaq üçün dayandırılır..."
             MSG_EXECUTOR_KILLED="Köhnə executor prosesi uğurla dayandırıldı."
             MSG_NO_EXECUTOR_RUNNING="İşlək executor prosesi tapılmadı - davam etmək təhlükəsizdir."
+			MSG_WARNING="⚠️ XƏBƏRDARLIQ: HƏR HANSI BİR XƏTAYA GÖRƏ BU SKRİPTİN EKRAN ŞƏKİLLƏRİNİ PAYLAŞARKƏN, ŞƏXSİ AÇARLARINIZIN VƏ ALCHEMY API AÇARINIZIN GÖRÜNMƏDİYİNDƏN ƏMIN OLUN! ƏKS HALDA, CÜZDANINIZDAKI BÜTÜN AKTİVLƏRİ İTİRƏ VƏ YA API MƏLUMATLARINIZI İFŞA EDƏ BİLƏRSİNİZ! ⚠️"
             break
             ;;
         ru)
@@ -316,6 +318,7 @@ while true; do
             MSG_KILLING_EXECUTOR="Обнаружен запущенный процесс executor. Останавливаем для предотвращения конфликтов..."
             MSG_EXECUTOR_KILLED="Старый процесс executor успешно остановлен."
             MSG_NO_EXECUTOR_RUNNING="Запущенных процессов executor не обнаружено - можно продолжать."
+			MSG_WARNING="⚠️ ПРЕДУПРЕЖДЕНИЕ: ЕСЛИ ВЫ ДЕЛИТЕСЬ СКРИНШОТАМИ ЭТОГО СКРИПТА ИЗ-ЗА ОШИБКИ, УБЕДИТЕСЬ, ЧТО ВАШИ ПРИВАТНЫЕ КЛЮЧИ И КЛЮЧ ALCHEMY API НЕ ВИДНЫ! В ПРОТИВНОМ СЛУЧАЕ ВЫ МОЖЕТЕ ПОТЕРЯТЬ ВСЕ СВОИ АКТИВЫ В КОШЕЛЬКЕ ИЛИ РАСКРЫТЬ ДОСТУП К API! ⚠️"
             break
             ;;
         de)
@@ -379,6 +382,7 @@ while true; do
             MSG_KILLING_EXECUTOR="Laufender Executor-Prozess gefunden. Wird beendet um Konflikte zu vermeiden..."
             MSG_EXECUTOR_KILLED="Alter Executor-Prozess erfolgreich beendet."
             MSG_NO_EXECUTOR_RUNNING="Kein laufender Executor-Prozess gefunden - fortfahren ist sicher."
+			MSG_WARNING="⚠️ WARNUNG: WENN SIE SCREENSHOTS DIESES SKRIPTS AUFGRUND EINES FEHLERS TEILEN, STELLEN SIE SICHER, DASS IHRE PRIVATEN SCHLÜSSEL UND IHR ALCHEMY-API-SCHLÜSSEL NICHT SICHTBAR SIND! ANDERNFALLS KÖNNTEN SIE ALLE IHRE VERMÖGENSWERTE IM WALLET VERLIEREN ODER IHREN API-ZUGANG OFFENLEGEN! ⚠️"
             break
             ;;
         id)
@@ -442,6 +446,7 @@ while true; do
             MSG_KILLING_EXECUTOR="Proses executor yang sedang berjalan ditemukan. Menghentikan untuk menghindari konflik..."
             MSG_EXECUTOR_KILLED="Proses executor lama berhasil dihentikan."
             MSG_NO_EXECUTOR_RUNNING="Tidak ada proses executor yang berjalan - aman untuk melanjutkan."
+			MSG_WARNING="⚠️ PERINGATAN: SAAT MEMBAGIKAN SCREENSHOT DARI SCRIPT INI KARENA TERJADI KESALAHAN, PASTIKAN KUNCI PRIBADI DAN KUNCI ALCHEMY API ANDA TIDAK TERLIHAT! JIKA TIDAK, ANDA BISA KEHILANGAN SELURUH ASET DI DOMPET ANDA ATAU MENGUNGKAPKAN AKSES API ANDA! ⚠️"
             break
             ;;
         fr)
@@ -502,6 +507,7 @@ while true; do
             MSG_KILLING_EXECUTOR="Processus executor en cours détecté. Arrêt pour éviter les conflits..."
             MSG_EXECUTOR_KILLED="Ancien processus executor arrêté avec succès."
             MSG_NO_EXECUTOR_RUNNING="Aucun processus executor en cours - prêt à continuer."
+			MSG_WARNING="⚠️ AVERTISSEMENT : LORSQUE VOUS PARTAGEZ DES CAPTURES D'ÉCRAN DE CE SCRIPT EN RAISON D'UNE ERREUR, ASSUREZ-VOUS QUE VOS CLÉS PRIVÉES ET VOTRE CLÉ API ALCHEMY NE SONT PAS VISIBLES ! SINON, VOUS RISQUEZ DE PERDRE TOUS LES ACTIFS DE VOTRE PORTEFEUILLE OU DE COMPROMETTRE VOTRE ACCÈS API ! ⚠️"
             break
             ;;
         *)
@@ -602,13 +608,15 @@ while true; do
     esac
 done
 
-# Ask for wallet private key (visible input)
-echo -e "${GREEN}$MSG_PRIVATE_KEY${NC} "
+echo -e "${RED}$MSG_WARNING${NC}"
+
+# Ask for wallet private key (masked input)
+echo -e "${GREEN}$MSG_PRIVATE_KEY${NC}"
 WALLET_PRIVATE_KEY=$(ask_for_input "")
 
-# Ask for Alchemy API key (if RPC node is selected)
+# Ask for Alchemy API key (masked input, if RPC node is selected)
 if [[ "$NODE_TYPE" == "rpc" ]]; then
-    echo -e "${GREEN}$MSG_ALCHEMY_API_KEY${NC} "
+    echo -e "${GREEN}$MSG_ALCHEMY_API_KEY${NC}"
     ALCHEMY_API_KEY=$(ask_for_input "")
 fi
 
