@@ -632,7 +632,7 @@ while true; do
 done
 
 # Set Node Environment
-export NODE_ENV=testnet
+export ENVIRONMENT=testnet
 
 # Set log settings
 export LOG_LEVEL=debug
