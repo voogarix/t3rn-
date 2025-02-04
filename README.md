@@ -99,7 +99,6 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 - ## 📺 Wathc the video to see how it works 👇
 [T3RN Network v1 testnet interactive node installation.](https://www.youtube.com/watch?v=jNiqmzZ7IMk)
 
-[![T3RN Network v1 testnet interactive node installation.]](https://youtu.be/jNiqmzZ7IMk)
 
 
 ## ✨ AUTO INSTALLATION
