@@ -1,4 +1,4 @@
-# 👉 T3RN Executor 1-click installation
+# 👉 T3RN Executor multilingual interactive easy installation
 
 ## This script will always install the latest version of t3rn executor node
 
