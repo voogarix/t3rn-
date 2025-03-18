@@ -205,7 +205,7 @@ while true; do
 			MSG_BSSP_DESC="BSSP = base-sepolia"
 			MSG_OPSP_DESC="OPSP = optimism-sepolia"
 			MSG_BLSS_DESC="BLSS = blast-sepolia"
-			MSG_L1RN_ALWAYS_ENABLED="L1RN is always enabled."
+			MSG_L2RN_ALWAYS_ENABLED="L2RN is always enabled."
 			MSG_ENTER_NETWORKS="Enter the networks you want to enable (comma-separated, e.g., ARBT,BSSP,OPSP,BLSS or press Enter/type 'all' to enable all):"
 			MSG_INVALID_NETWORK="Invalid network: %s. Please enter valid networks."
 			MSG_KILLING_EXECUTOR="A running executor process was found. Killing it..."
@@ -272,7 +272,7 @@ while true; do
             MSG_BSSP_DESC="BSSP = base-sepolia"
             MSG_OPSP_DESC="OPSP = optimism-sepolia" 
             MSG_BLSS_DESC="BLSS = blast-sepolia"
-            MSG_L1RN_ALWAYS_ENABLED="L1RN həmişə aktivdir."
+            MSG_L2RN_ALWAYS_ENABLED="L2RN həmişə aktivdir."
             MSG_ENTER_NETWORKS="Aktiv etmək istədiyiniz şəbəkələri daxil edin (vergüllə ayrılmış, məsələn, ARBT,BSSP,OPSP,BLSS və ya hamısını aktiv etmək üçün Enter düyməsini basın/'all' yazın):"
             MSG_INVALID_NETWORK="Yanlış şəbəkə: %s. Zəhmət olmasa etibarlı şəbəkələri daxil edin."
 			MSG_KILLING_EXECUTOR="İşləyən executor prosesi tapıldı. Proses sonlandırılır..."
@@ -339,7 +339,7 @@ while true; do
             MSG_BSSP_DESC="BSSP = base-sepolia"
             MSG_OPSP_DESC="OPSP = optimism-sepolia"
             MSG_BLSS_DESC="BLSS = blast-sepolia"
-            MSG_L1RN_ALWAYS_ENABLED="L1RN всегда включен."
+            MSG_L2RN_ALWAYS_ENABLED="L2RN всегда включен."
             MSG_ENTER_NETWORKS="Введите сети, которые хотите активировать (через запятую, например: ARBT,BSSP,OPSP,BLSS или нажмите Enter/введите 'all' для всех):"
             MSG_INVALID_NETWORK="Неверная сеть: %s. Пожалуйста, введите корректные сети."
 			MSG_KILLING_EXECUTOR="Найден запущенный процесс executor. Завершение процесса..."
@@ -406,7 +406,7 @@ while true; do
             MSG_BSSP_DESC="BSSP = base-sepolia"
             MSG_OPSP_DESC="OPSP = optimism-sepolia"
             MSG_BLSS_DESC="BLSS = blast-sepolia"
-            MSG_L1RN_ALWAYS_ENABLED="L1RN ist immer aktiviert."
+            MSG_L2RN_ALWAYS_ENABLED="L2RN ist immer aktiviert."
             MSG_ENTER_NETWORKS="Geben Sie die zu aktivierenden Netzwerke ein (kommagetrennt, z.B. ARBT,BSSP,OPSP,BLSS oder Enter/'all' für alle):"
             MSG_INVALID_NETWORK="Ungültiges Netzwerk: %s. Bitte gültige Netzwerke eingeben."
 			MSG_KILLING_EXECUTOR="Ein laufender Executor-Prozess wurde gefunden. Wird beendet..."
@@ -473,7 +473,7 @@ while true; do
             MSG_BSSP_DESC="BSSP = base-sepolia"
             MSG_OPSP_DESC="OPSP = optimism-sepolia"
             MSG_BLSS_DESC="BLSS = blast-sepolia"
-            MSG_L1RN_ALWAYS_ENABLED="L1RN selalu diaktifkan."
+            MSG_L2RN_ALWAYS_ENABLED="L2RN selalu diaktifkan."
             MSG_ENTER_NETWORKS="Masukkan jaringan yang ingin Anda aktifkan (dipisahkan koma, contoh: ARBT,BSSP,OPSP,BLSS atau tekan Enter/ketik 'all' untuk semua):"
             MSG_INVALID_NETWORK="Jaringan tidak valid: %s. Silakan masukkan jaringan yang valid."
 			MSG_KILLING_EXECUTOR="Proses executor yang sedang berjalan ditemukan. Menghentikannya..."
@@ -540,7 +540,7 @@ while true; do
             MSG_BSSP_DESC="BSSP = base-sepolia"
             MSG_OPSP_DESC="OPSP = optimism-sepolia"
             MSG_BLSS_DESC="BLSS = blast-sepolia"
-            MSG_L1RN_ALWAYS_ENABLED="L1RN est toujours activé."
+            MSG_L2RN_ALWAYS_ENABLED="L2RN est toujours activé."
             MSG_ENTER_NETWORKS="Entrez les réseaux à activer (séparés par des virgules, ex: ARBT,BSSP,OPSP,BLSS ou Entrée/'all' pour tous) :"
             MSG_INVALID_NETWORK="Réseau invalide : %s. Veuillez entrer des réseaux valides."
 			MSG_CHECKING_EXECUTOR="=== Vérification des processus executor en cours ==="
@@ -703,6 +703,7 @@ DEFAULT_RPC_ENDPOINTS=$(cat <<EOF
     "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
     "arbt": ["https://arbitrum-sepolia.drpc.org"],
     "bast": ["https://base-sepolia-rpc.publicnode.com"],
+    "blst": ["https://sepolia.blast.io"],
     "opst": ["https://sepolia.optimism.io"],
     "unit": ["https://unichain-sepolia.drpc.org"]
 }
@@ -717,11 +718,12 @@ if [[ "$CUSTOM_RPC" =~ ^[Yy]$ ]]; then
     echo -e "${ORANGE}$MSG_ENTER_CUSTOM_RPC${NC}"
     
     declare -A rpc_map=(
-        ["arbt"]="Arbitrum Sepolia"
-        ["bast"]="Base Sepolia" 
-        ["opst"]="Optimism Sepolia"
-        ["unit"]="Unichain"
-        ["l2rn"]="L2RN"
+    ["arbt"]="Arbitrum Sepolia"
+    ["bast"]="Base Sepolia"
+    ["blst"]="Blast Sepolia"
+    ["opst"]="Optimism Sepolia"
+    ["unit"]="Unichain Sepolia"
+    ["l2rn"]="L2RN"
     )
 
     RPC_ENDPOINTS_JSON="{"
@@ -811,17 +813,18 @@ export RPC_ENDPOINTS=$RPC_ENDPOINTS_JSON
 
 # Ask user which network should be enabled
 echo -e "${GREEN}$MSG_AVAILABLE_NETWORKS${NC}"
-echo -e "${ORANGE}$MSG_ARBT_DESC${NC}"
-echo -e "${ORANGE}$MSG_BSSP_DESC${NC}"
-echo -e "${ORANGE}$MSG_OPSP_DESC${NC}"
-echo -e "${ORANGE}$MSG_BLSS_DESC${NC}"
-echo -e "${RED}$MSG_L1RN_ALWAYS_ENABLED${NC}"
+echo -e "${ORANGE}ARBT = arbitrum-sepolia${NC}"
+echo -e "${ORANGE}BAST = base-sepolia${NC}"
+echo -e "${ORANGE}BLST = blast-sepolia${NC}"
+echo -e "${ORANGE}OPST = optimism-sepolia${NC}"
+echo -e "${ORANGE}UNIT = unichain-sepolia${NC}"
+echo -e "${RED}$MSG_L2RN_ALWAYS_ENABLED${NC}"
 
-ENABLED_NETWORKS="l1rn"
+ENABLED_NETWORKS="l2rn"  # l2rn is now always enabled as base layer
 while true; do
-    read -p "$(echo -e "${GREEN}$MSG_ENTER_NETWORKS${NC} ")" USER_NETWORKS
+    read -p "$(echo -e "${GREEN}Enter networks to enable (comma-separated):\n[ARBT, BAST, BLST, OPST, UNIT] or 'all':${NC} ")" USER_NETWORKS
     if [[ -z "$USER_NETWORKS" || "$USER_NETWORKS" =~ ^[Aa][Ll][Ll]$ ]]; then
-        ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia,base-sepolia,optimism-sepolia,blast-sepolia"
+        ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,unichain-sepolia"
         break
     else
         IFS=',' read -r -a networks <<< "$USER_NETWORKS"
@@ -831,27 +834,28 @@ while true; do
                 ARBT)
                     ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia"
                     ;;
-                BSSP)
+                BAST)
                     ENABLED_NETWORKS="$ENABLED_NETWORKS,base-sepolia"
                     ;;
-                OPSP)
-                    ENABLED_NETWORKS="$ENABLED_NETWORKS,optimism-sepolia"
-                    ;;
-                BLSS)
+                BLST)
                     ENABLED_NETWORKS="$ENABLED_NETWORKS,blast-sepolia"
                     ;;
+                OPST)
+                    ENABLED_NETWORKS="$ENABLED_NETWORKS,optimism-sepolia"
+                    ;;
+                UNIT)
+                    ENABLED_NETWORKS="$ENABLED_NETWORKS,unichain-sepolia"
+                    ;;
                 *)
-                    echo -e "${RED}$(printf "$MSG_INVALID_NETWORK" "$network")${NC}"
+                    echo -e "${RED}Invalid network: $network. Valid options: ARBT, BAST, BLST, OPST, UNIT${NC}"
                     valid=false
                     break
                     ;;
-            esac  # Close the case block
-        done  # Close the for loop
-        if $valid; then
-            break
-        fi  # Close the if block
-    fi  # Close the outer if block
-done  # Close the while loop
+            esac
+        done
+        $valid && break
+    fi
+done
 export ENABLED_NETWORKS
 
 # Export RPC endpoints
