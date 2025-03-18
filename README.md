@@ -1,4 +1,4 @@
-# 👉 T3RN Executor multilingual interactive easy installation
+# 👉 T3RN V2 Incentivized Executor Node multilingual interactive easy installation script
 
 ## This script will always install the latest version of t3rn executor node
 
