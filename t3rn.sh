@@ -60,11 +60,13 @@ install_jq_if_needed() {
         
         # Try to install jq based on the OS
         if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            # Linux (Debian/Ubuntu)
             sudo apt-get update && sudo apt-get install -y jq
+            if [ $? -ne 0 ]; then
+                echo -e "${RED}$MSG_JQ_INSTALL_FAILED${NC}"
+                exit 1
+            fi
         else
             echo -e "${RED}$MSG_JQ_INSTALL_FAILED${NC}"
-            echo -e "Ubuntu/debian: sudo apt-get install jq -y"
             exit 1
         fi
 
