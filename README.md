@@ -113,7 +113,7 @@ sudo apt update && sudo apt upgrade -y
 
 Install required packages:
 ```bash
-sudo apt install curl screen -y
+sudo apt install curl screen jq -y
 ```
 
 If you were using old version of this script, first delete it:
