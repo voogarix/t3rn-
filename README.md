@@ -1,7 +1,5 @@
 # 👉 T3RN V2 Incentivized Executor Node multilingual interactive easy installation script
 
-## This script will always install the latest version of t3rn executor node
-
 
 ## 👉 Get free 20€ credit for Hetzner Cloud VPS 💻 :
 [https://www.hetzner.cloud/](https://hetzner.cloud/?ref=mjjaxNOJxUW1)
@@ -34,25 +32,13 @@ Check Executor [https://bridge.t1rn.io/explorer/orders](https://bridge.t1rn.io/e
 
 BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.caldera.xyz/)
 
-## Minimum recommended Balance to run executor node:
-
-🔴 L1RN = 1 BRN 
-
-🔴 ARB SEPO = 2 ETH
-
-🔴 BASE SEPO = 2 ETH
-
-🔴 OPT SEPO = 2 ETH
-
-🔴 BLAST SEPO = 2 ETH
+## Minimum 10 ETH on each chain is recommended to catch some bid and at least 1 BRN for fees (mandatory!).
 
 ## Bridge:
 
-🔴 SEPO to ARB SEPO : [https://bridge.arbitrum.io/?destinationChain=arbitrum-sepolia&sourceChain=sepolia](https://bridge.arbitrum.io/?destinationChain=arbitrum-sepolia&sourceChain=sepolia)
+🔴 SEPO to ARB SEPO : [Arbitrum Official Bridge](https://bridge.arbitrum.io/?destinationChain=arbitrum-sepolia&sourceChain=sepolia)
 
-🔴 SEPO to BASE SEPO : [https://superbridge.app/base-sepolia](https://superbridge.app/base-sepolia)
-
-🔴 SEPO to OPT SEPO : [https://superbridge.app/op-sepolia](https://superbridge.app/op-sepolia)
+🔴 SEPO to BASE, UNICHAIN and other Superchain SEPO : [SuperBridge](https://superbridge.app/base-sepolia)
 
 🔴 SEPO to BLAST SEPO : send Sepolia ETH to one of these addresses (***1st one is recommended***) to get ETH on Blast Sepolia: ***0xc644cc19d2A9388b71dd1dEde07cFFC73237Dca8*** or ***0xDeDa8D3CCf044fE2A16217846B6e1f1cfD8e122f***
 
