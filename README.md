@@ -80,11 +80,11 @@ BRN blockchain explorer [https://brn.explorer.caldera.xyz](https://brn.explorer.
 
 ## ⚙️ This script will offer 3 installation modes:
 
-### ℹ️ API node = executor node will process requests from API and doesn't need to have a private Alchemy RPC points.
+### ℹ️ API Node = executor node will process requests from API and doesn't need to have a private Alchemy RPC points.
 
-### ℹ️ RPC node = executor will ask for Alchemy API key and will process only orders from RPC requests.
+### ℹ️ Alchemy RPC = executor will ask for Alchemy API key and will process only orders from RPC requests.
 
-### ℹ️ Custom node = It's same as RPC mode, but instead of Alchemy API, uses public RPC points.
+### ℹ️ Custom RPC = It's same as RPC mode, but instead of Alchemy API, uses public RPC points.
 
 ## ⚠️ Additionally script will ask if you want to add custom public RPC nodes. If you say NO then it will use default public RPCs which already integrated into script
 
