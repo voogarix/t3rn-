@@ -880,11 +880,11 @@ fi
 # Default RPC endpoints
 DEFAULT_RPC_ENDPOINTS_JSON='{
   "l2rn": ["https://b2n.rpc.caldera.xyz/http", "https://b2n-testnet.blockpi.network/v1/rpc/public"],
-  "arbt": ["https://arbitrum-sepolia.drpc.org"],
-  "bast": ["https://base-sepolia-rpc.publicnode.com"],
-  "blst": ["https://sepolia.blast.io"],
-  "opst": ["https://sepolia.optimism.io"],
-  "unit": ["https://unichain-sepolia.drpc.org"]
+  "arbt": ["https://arbitrum-sepolia.gateway.tenderly.co", "https://arbitrum-sepolia.drpc.org"],
+  "bast": ["https://base-sepolia-rpc.publicnode.com", "wss://base-sepolia.drpc.org"],
+  "blst": ["https://sepolia.blast.io", "https://endpoints.omniatech.io/v1/blast/sepolia/public"],
+  "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.gateway.tenderly.co"],
+  "unit": ["https://unichain-sepolia.drpc.org", "https://unichain-sepolia-rpc.publicnode.com"]
 }'
 
 # Initialize RPC_ENDPOINTS_JSON with defaults
