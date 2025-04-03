@@ -879,7 +879,7 @@ fi
 
 # Default RPC endpoints
 DEFAULT_RPC_ENDPOINTS_JSON='{
-  "l2rn": ["https://b2n.rpc.caldera.xyz/http", "https://b2n-testnet.blockpi.network/v1/rpc/public"],
+  "l2rn": ["https://t3rn-b2n.blockpi.network/v1/rpc/public", "https://b2n.rpc.caldera.xyz/http"],
   "arbt": ["https://arbitrum-sepolia.gateway.tenderly.co", "https://arbitrum-sepolia.drpc.org"],
   "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org"],
   "blst": ["https://sepolia.blast.io", "https://endpoints.omniatech.io/v1/blast/sepolia/public"],
