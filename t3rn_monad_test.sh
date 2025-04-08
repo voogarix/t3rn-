@@ -1005,19 +1005,37 @@ echo -e "${ORANGE}OPST = optimism-sepolia${NC}"
 echo -e "${ORANGE}UNIT = unichain-sepolia${NC}"
 echo -e "${ORANGE}MONT = monad-testnet${NC}"
 echo -e "${RED}$MSG_L2RN_ALWAYS_ENABLED${NC}"
-echo -e "${GREEN}Want to add a custom network? Enter 'custom'${NC}"
+echo -e "${GREEN}Enter the networks you want to enable (comma-separated, e.g., ARBT,BSSP,OPSP,BLSS,MONT)"
+echo -e "Or type 'all' to enable all networks"
+echo -e "Or type 'custom' to add a custom network${NC}"
 
 ENABLED_NETWORKS="l2rn"  # l2rn is now always enabled as base layer
 while true; do
-    read -p "$(echo -e "${GREEN}Enter networks to enable (comma-separated):\n[ARBT, BAST, BLST, OPST, UNIT] or 'all':${NC} ")" USER_NETWORKS
+    read -p "$(echo -e "${GREEN}Your selection: ${NC}")" USER_NETWORKS
+    
+    # Handle empty input or 'all'
     if [[ -z "$USER_NETWORKS" || "$USER_NETWORKS" =~ ^[Aa][Ll][Ll]$ ]]; then
-        ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,unichain-sepolia"
+        ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,unichain-sepolia,monad-testnet"
         break
+    # Handle custom network request
+    elif [[ "$USER_NETWORKS" =~ ^[Cc][Uu][Ss][Tt][Oo][Mm]$ ]]; then
+        echo -e "${GREEN}Enter custom network name (e.g., mynetwork):${NC}"
+        read -p "> " CUSTOM_NET_NAME
+        echo -e "${GREEN}Enter RPC endpoints for $CUSTOM_NET_NAME (comma-separated):${NC}"
+        read -p "> " CUSTOM_RPC_ENDPOINTS
+        # Add to RPC_ENDPOINTS_JSON
+        RPC_ENDPOINTS_JSON=$(echo "$RPC_ENDPOINTS_JSON" | jq \
+            --arg name "$CUSTOM_NET_NAME" \
+            --argjson endpoints "$(parse_rpc_input "$CUSTOM_RPC_ENDPOINTS")" \
+            '. + {($name): $endpoints}')
+        ENABLED_NETWORKS="$ENABLED_NETWORKS,$CUSTOM_NET_NAME"
+        break
+    # Handle specific network selection
     else
         IFS=',' read -r -a networks <<< "$USER_NETWORKS"
         valid=true
         for network in "${networks[@]}"; do
-            case "$network" in
+            case "$(echo "$network" | tr '[:lower:]' '[:upper:]')" in
                 ARBT)
                     ENABLED_NETWORKS="$ENABLED_NETWORKS,arbitrum-sepolia"
                     ;;
@@ -1033,23 +1051,11 @@ while true; do
                 UNIT)
                     ENABLED_NETWORKS="$ENABLED_NETWORKS,unichain-sepolia"
                     ;;
-				 MONT)
-					ENABLED_NETWORKS="$ENABLED_NETWORKS,monad-testnet"
-            ;;
-				custom)
-					echo -e "${GREEN}Enter custom network name (e.g., mynetwork):${NC}"
-					read -p "> " CUSTOM_NET_NAME
-					echo -e "${GREEN}Enter RPC endpoints for $CUSTOM_NET_NAME (comma-separated):${NC}"
-					read -p "> " CUSTOM_RPC_ENDPOINTS
-					# Add to RPC_ENDPOINTS_JSON
-					RPC_ENDPOINTS_JSON=$(echo "$RPC_ENDPOINTS_JSON" | jq \
-						--arg name "$CUSTOM_NET_NAME" \
-						--argjson endpoints "$(parse_rpc_input "$CUSTOM_RPC_ENDPOINTS")" \
-						'. + {($name): $endpoints}')
-					ENABLED_NETWORKS="$ENABLED_NETWORKS,$CUSTOM_NET_NAME"
-					;;
-					*)
-                    echo -e "${RED}Invalid network: $network. Valid options: ARBT, BAST, BLST, OPST, UNIT, MONT${NC}"
+                MONT)
+                    ENABLED_NETWORKS="$ENABLED_NETWORKS,monad-testnet"
+                    ;;
+                *)
+                    echo -e "${RED}Invalid network: $network. Valid options: ARBT, BAST, BLST, OPST, UNIT, MONT or 'custom'${NC}"
                     valid=false
                     break
                     ;;
