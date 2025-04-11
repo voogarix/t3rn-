@@ -884,7 +884,8 @@ DEFAULT_RPC_ENDPOINTS_JSON='{
   "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org"],
   "blst": ["https://sepolia.blast.io", "https://endpoints.omniatech.io/v1/blast/sepolia/public"],
   "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.gateway.tenderly.co"],
-  "unit": ["https://unichain-sepolia.drpc.org", "https://unichain-sepolia-rpc.publicnode.com"]
+  "unit": ["https://unichain-sepolia.drpc.org", "https://unichain-sepolia-rpc.publicnode.com"],
+  "mont": ["https://testnet-rpc.monad.xyz"]  # Added Monad network
 }'
 
 # Initialize RPC_ENDPOINTS_JSON with defaults
@@ -897,6 +898,7 @@ DEFAULT_RPC_ENDPOINTS_BLSS=$(echo "$DEFAULT_RPC_ENDPOINTS_JSON" | jq -r '.blst[0
 DEFAULT_RPC_ENDPOINTS_OPSP=$(echo "$DEFAULT_RPC_ENDPOINTS_JSON" | jq -r '.opst[0]')
 DEFAULT_RPC_ENDPOINTS_UNIT=$(echo "$DEFAULT_RPC_ENDPOINTS_JSON" | jq -r '.unit[0]')
 DEFAULT_RPC_ENDPOINTS_L2RN=$(echo "$DEFAULT_RPC_ENDPOINTS_JSON" | jq -r '.l2rn[0]')
+DEFAULT_RPC_ENDPOINTS_MONT=$(echo "$DEFAULT_RPC_ENDPOINTS_JSON" | jq -r '.mont[0]')
 
 
 # Ask if the user wants to add custom RPC endpoints or use default ones
@@ -911,7 +913,8 @@ if [[ "$CUSTOM_RPC" =~ ^[Yy]$ ]]; then
         ["bast"]="Base Sepolia"
         ["blst"]="Blast Sepolia"
         ["opst"]="Optimism Sepolia"
-        ["unit"]="Unichain Sepolia"  # Added
+        ["unit"]="Unichain Sepolia"
+		["mont"]="Monad Testnet"
         ["l2rn"]="L2RN"
     )
 
@@ -1002,6 +1005,7 @@ echo -e "${ORANGE}BAST = base-sepolia${NC}"
 echo -e "${ORANGE}BLST = blast-sepolia${NC}"
 echo -e "${ORANGE}OPST = optimism-sepolia${NC}"
 echo -e "${ORANGE}UNIT = unichain-sepolia${NC}"
+echo -e "${ORANGE}MONT = monad-testnet${NC}"
 echo -e "${RED}$MSG_L2RN_ALWAYS_ENABLED${NC}"
 
 ENABLED_NETWORKS="l2rn"  # l2rn is now always enabled as base layer
@@ -1030,6 +1034,9 @@ while true; do
                 UNIT)
                     ENABLED_NETWORKS="$ENABLED_NETWORKS,unichain-sepolia"
                     ;;
+				MONT)
+                    ENABLED_NETWORKS="$ENABLED_NETWORKS,monad-testnet"
+                    ;;
                 *)
                     echo -e "${RED}Invalid network: $network. Valid options: ARBT, BAST, BLST, OPST, UNIT${NC}"
                     valid=false
@@ -1048,6 +1055,7 @@ export RPC_ENDPOINTS_BSSP
 export RPC_ENDPOINTS_BLSS
 export RPC_ENDPOINTS_OPSP
 export RPC_ENDPOINTS_L1RN
+export RPC_ENDPOINTS_MONT
 export EXECUTOR_MAX_L3_GAS_PRICE=$GAS_VALUE
 
 # Display the collected inputs and settings (for verification)
@@ -1094,6 +1102,9 @@ if [[ "$ENABLED_NETWORKS" == *"blast-sepolia"* ]]; then
 fi
 if [[ "$ENABLED_NETWORKS" == *"unichain-sepolia"* ]]; then
     echo -e "${ORANGE}UNIT:${NC} ${BLUE}$RPC_ENDPOINTS_UNIT${NC}"
+fi
+if [[ "$ENABLED_NETWORKS" == *"monad-testnet"* ]]; then
+    echo -e "${ORANGE}MONT:${NC} ${BLUE}$RPC_ENDPOINTS_MONT${NC}"
 fi
 
 # Step 5: Proceed with the installation or other setup steps
