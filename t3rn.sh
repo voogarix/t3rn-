@@ -230,7 +230,7 @@ while true; do
 			MSG_OPSP_DESC="OPSP = optimism-sepolia"
 			MSG_BLSS_DESC="BLSS = blast-sepolia"
 			MSG_L2RN_ALWAYS_ENABLED="L2RN is always enabled."
-			MSG_ENTER_NETWORKS="Enter the networks you want to enable (comma-separated, e.g., ARBT,BSSP,OPSP,BLSS or press Enter/type 'all' to enable all):"
+			MSG_ENTER_NETWORKS="Enter the networks you want to enable (comma-separated, e.g., ARBT,BSSP,OPSP,BLSS,MONT or press Enter/type 'all' to enable all):"
 			MSG_INVALID_NETWORK="Invalid network: %s. Please enter valid networks."
 			MSG_KILLING_EXECUTOR="A running executor process was found. Killing it..."
             MSG_EXECUTOR_KILLED="Executor process has been successfully terminated."
@@ -908,29 +908,32 @@ read CUSTOM_RPC
 if [[ "$CUSTOM_RPC" =~ ^[Yy]$ ]]; then
     echo -e "${ORANGE}$MSG_ENTER_CUSTOM_RPC${NC}"
     
+    # Define network names for display
     declare -A rpc_map=(
         ["arbt"]="Arbitrum Sepolia"
         ["bast"]="Base Sepolia"
         ["blst"]="Blast Sepolia"
         ["opst"]="Optimism Sepolia"
-        ["unit"]="Unichain Sepolia"  # Added
+        ["unit"]="Unichain Sepolia"
+        ["mont"]="Monad Testnet"
         ["l2rn"]="L2RN"
     )
 
     RPC_ENDPOINTS_JSON="{"
-    for network in "${!rpc_map[@]}"; do
-        echo -e "${GREEN}Enter RPC endpoints for ${rpc_map[$network]} (comma-separated):${NC}"
+    for network in arbt bast blst opst unit mont l2rn; do
+        network_name=${rpc_map[$network]}
+        echo -e "${GREEN}Enter RPC endpoints for $network_name (comma-separated):${NC}"
         read -p "> " endpoints
         if [ -n "$endpoints" ]; then
             RPC_ENDPOINTS_JSON+="\"$network\": $(parse_rpc_input "$endpoints"),"
         else
-            default_value=$(echo "$DEFAULT_RPC_ENDPOINTS_JSON" | jq -c ".$network")  # Fixed variable
+            default_value=$(echo "$DEFAULT_RPC_ENDPOINTS_JSON" | jq -c ".$network")
             RPC_ENDPOINTS_JSON+="\"$network\": $default_value,"
         fi
     done
     RPC_ENDPOINTS_JSON="${RPC_ENDPOINTS_JSON%,}}"
 else
-    RPC_ENDPOINTS_JSON="$DEFAULT_RPC_ENDPOINTS_JSON"  # Fixed variable
+    RPC_ENDPOINTS_JSON="$DEFAULT_RPC_ENDPOINTS_JSON"
 fi
 
 
@@ -950,11 +953,11 @@ for i in "${VALID_INDICES[@]}"; do
 done
 
 # Ensure default or user selection gets assigned
-if [ ${#SELECTED_URLS[@]} -eq 0 ]; then
-    RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.caldera.xyz/"
-else
-    RPC_ENDPOINTS_L1RN=$(IFS=,; echo "${SELECTED_URLS[*]}")
-fi
+#if [ ${#SELECTED_URLS[@]} -eq 0 ]; then
+#    RPC_ENDPOINTS_L1RN="https://brn.calderarpc.com/http,https://brn.rpc.caldera.xyz/"
+#else
+#    RPC_ENDPOINTS_L1RN=$(IFS=,; echo "${SELECTED_URLS[*]}")
+#fi
 
 # Configure RPC endpoints based on node type
 if [[ "$NODE_TYPE" == "alchemy-rpc" ]]; then
@@ -965,9 +968,10 @@ if [[ "$NODE_TYPE" == "alchemy-rpc" ]]; then
     --arg arbt "https://arb-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY" \
     --arg bast "https://base-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY" \
     --arg opst "https://opt-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY" \
+    --arg unit "https://unichain-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY" \
     --arg blst "https://blast-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY" \
-    --arg mont "https://testnet-rpc.monad.xyz" \
-    '.arbt = [ $arbt ] | .bast = [ $bast ] | .opst = [ $opst ] | .blst = [ $blst ] | .mont = [ $mont ]'); then
+    --arg mont "https://monad-testnet.g.alchemy.com/v2/$ALCHEMY_API_KEY" \
+    '.arbt = [ $arbt ] | .bast = [ $bast ] | .opst = [ $opst ] | .unit = [ $unit ] | .blst = [ $blst ] | .mont = [ $mont ]'); then
     echo -e "${RED}Failed to merge Alchemy endpoints. Invalid JSON structure.${NC}"
     exit 1
   fi
@@ -1002,7 +1006,7 @@ echo -e "${ORANGE}OPST = optimism-sepolia${NC}"
 echo -e "${ORANGE}UNIT = unichain-sepolia${NC}"
 echo -e "${ORANGE}MONT = monad-testnet${NC}"
 echo -e "${RED}$MSG_L2RN_ALWAYS_ENABLED${NC}"
-echo -e "${GREEN}Enter the networks you want to enable (comma-separated, e.g., ARBT,BSSP,OPSP,BLSS,MONT)"
+echo -e "${GREEN}$MSG_ENTER_NETWORKS"
 echo -e "Or type 'all' to enable all networks"
 echo -e "Or type 'custom' to add a custom network${NC}"
 
@@ -1064,11 +1068,13 @@ done
 export ENABLED_NETWORKS
 
 # Export RPC endpoints
-export RPC_ENDPOINTS_ARBT
-export RPC_ENDPOINTS_BSSP
-export RPC_ENDPOINTS_BLSS
-export RPC_ENDPOINTS_OPSP
-export RPC_ENDPOINTS_L1RN
+#export RPC_ENDPOINTS_ARBT
+#export RPC_ENDPOINTS_BSSP
+#export RPC_ENDPOINTS_BLSS
+#export RPC_ENDPOINTS_OPSP
+#export RPC_ENDPOINTS_L2RN
+#export RPC_ENDPOINTS_MONT
+#export RPC_ENDPOINTS_UNIT
 export EXECUTOR_MAX_L3_GAS_PRICE=$GAS_VALUE
 
 # Display the collected inputs and settings (for verification)
@@ -1095,31 +1101,30 @@ echo -e "${ORANGE}EXECUTOR_PROCESS_CLAIMS_ENABLED:${NC} ${BLUE}$EXECUTOR_PROCESS
 echo -e "${GREEN}$MSG_RPC_ENDPOINTS_LABEL${NC}"
 
 # Check which networks are enabled and display their RPC endpoints
+if [[ "$ENABLED_NETWORKS" == *"l2rn"* ]]; then
+    echo -e "${ORANGE}L2RN:${NC} ${GREEN}$(echo "$RPC_ENDPOINTS_JSON" | jq -r '.l2rn[0]')${NC}"
+fi
 if [[ "$ENABLED_NETWORKS" == *"arbitrum-sepolia"* ]]; then
-    echo -e "${ORANGE}ARBT:${NC} ${BLUE}$RPC_ENDPOINTS_ARBT${NC}"
+    echo -e "${ORANGE}ARBT:${NC} ${BLUE}$(echo "$RPC_ENDPOINTS_JSON" | jq -r '.arbt[0]')${NC}"
 fi
 if [[ "$ENABLED_NETWORKS" == *"base-sepolia"* ]]; then
-    echo -e "${ORANGE}BSSP:${NC} ${BLUE}$RPC_ENDPOINTS_BSSP${NC}"
+    echo -e "${ORANGE}BAST:${NC} ${BLUE}$(echo "$RPC_ENDPOINTS_JSON" | jq -r '.bast[0]')${NC}"
 fi
 if [[ "$ENABLED_NETWORKS" == *"blast-sepolia"* ]]; then
-    echo -e "${ORANGE}BLSS:${NC} ${BLUE}$RPC_ENDPOINTS_BLSS${NC}"
+    echo -e "${ORANGE}BLST:${NC} ${BLUE}$(echo "$RPC_ENDPOINTS_JSON" | jq -r '.blst[0]')${NC}"
 fi
 if [[ "$ENABLED_NETWORKS" == *"optimism-sepolia"* ]]; then
-    echo -e "${ORANGE}OPSP:${NC} ${BLUE}$RPC_ENDPOINTS_OPSP${NC}"
-fi
-if [[ "$ENABLED_NETWORKS" == *"l1rn"* ]]; then
-    echo -e "${ORANGE}L1RN:${NC} ${BLUE}$RPC_ENDPOINTS_L1RN${NC}"
-fi
-if [[ "$ENABLED_NETWORKS" == *"blast-sepolia"* ]]; then
-    echo -e "${ORANGE}BLST:${NC} ${BLUE}$RPC_ENDPOINTS_BLSS${NC}"
+    echo -e "${ORANGE}OPST:${NC} ${BLUE}$(echo "$RPC_ENDPOINTS_JSON" | jq -r '.opst[0]')${NC}"
 fi
 if [[ "$ENABLED_NETWORKS" == *"unichain-sepolia"* ]]; then
-    echo -e "${ORANGE}UNIT:${NC} ${BLUE}$RPC_ENDPOINTS_UNIT${NC}"
+    echo -e "${ORANGE}UNIT:${NC} ${BLUE}$(echo "$RPC_ENDPOINTS_JSON" | jq -r '.unit[0]')${NC}"
 fi
-
 if [[ "$ENABLED_NETWORKS" == *"monad-testnet"* ]]; then
     echo -e "${ORANGE}MONT:${NC} ${BLUE}$(echo "$RPC_ENDPOINTS_JSON" | jq -r '.mont[0]')${NC}"
 fi
+#if [[ "$ENABLED_NETWORKS" == *"blast-sepolia"* ]]; then
+   # echo -e "${ORANGE}BLST:${NC} ${BLUE}$RPC_ENDPOINTS_BLSS${NC}"
+#fi
 
 # Display custom networks (not in predefined list)
 PREDEFINED_NETWORKS=("arbitrum-sepolia" "base-sepolia" "blast-sepolia" "optimism-sepolia" "unichain-sepolia" "monad-testnet" "l2rn")
